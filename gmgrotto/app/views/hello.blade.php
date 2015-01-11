@@ -17,6 +17,7 @@
 <body class="columns large-12">
 	<div class="row">
 		<header class="columns large-12">
+			<a href="{{ URL::to('/logout') }}" class='logout right'>Log Out</a>
 			<h1 class="text-center">GameMaster's Grotto</h1>
 		</header>
 	</div>

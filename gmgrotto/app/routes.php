@@ -54,7 +54,7 @@ Route::get('login', function()
 Route::post('login', function()
 {
 	$user = Input::get('username');
-	Session::put('uid', $user);
+	Session::put('uname', $user);
 	$credentials = Input::only('username', 'password');
 	if(Auth::attempt($credentials)) {
 		
@@ -67,7 +67,7 @@ Route::post('login', function()
 /*		Logout	*/
 Route::get('logout', function()
 {
-	Session::forget('uid');
+	Session::forget('uname');
 	Auth::logout();
 	return View::make('logout');
 });

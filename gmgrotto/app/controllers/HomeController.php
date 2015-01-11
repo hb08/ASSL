@@ -15,6 +15,7 @@ class HomeController extends BaseController {
 	|
 	*/
 
+
 	public function showWelcome()
 	{
 		return View::make('hello');
@@ -34,11 +35,20 @@ class HomeController extends BaseController {
 		else {
 			// checking file is valid
 			if (Input::file('newFile')->isValid()){
+				$user = Session::get('uname');
 				$filename = Input::get('filename');
 				// Saving
 				$destinationPath = 'public/_uploads';
 				Input::file('newFile')->move($destinationPath, $filename); 
-									
+				
+				// Database Reference
+				$uid = DB::table('users')->where('username', $user)->pluck('id');
+				Session::put('uid', $uid); // Save UID
+				// Add Filename to User on File Table
+				DB::table('files')->insert(
+					array('uid' => $uid, 'filename' => $filename)
+				);
+				
 				// Send back with message
 				Session::flash('success', 'Upload Successful!');
 				return Redirect::to('/');
