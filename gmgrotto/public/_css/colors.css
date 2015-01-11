@@ -1,0 +1,96 @@
+@import url(http://fonts.googleapis.com/css?family=Crushed|Handlee|Short+Stack);
+body{
+    background: url('../_images/orange2.jpg');
+}
+body > .row:nth-of-type(2) {
+	
+	box-shadow: 0px 0px 10px 5px #693705;
+	-webkit-border-top-left-radius: 15px;
+	-webkit-border-top-right-radius: 15px;
+	-moz-border-radius-topleft: 15px;
+	-moz-border-radius-topright: 15px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	font-family: 'Short Stack', cursive;
+	padding: 1% 2%;
+}
+.row {
+	max-width: 95%;
+}
+.row .row {
+	max-width: 100%;
+}
+.row > .row {
+	background: transparent;
+}
+body > .row > .columns > .row {
+	margin-bottom: 5%;	
+}
+
+header > h1 {
+	color: #89E6FF;
+	font: 3em 'Crushed', cursive;
+	margin: 0 auto;
+	text-shadow:0px 0px 0 rgb(10,124,155),1px 1px 0 rgb(-5,109,140),2px 2px 0 rgb(-19,95,126),3px 3px 0 rgb(-34,80,111),4px 4px 0 rgb(-48,66,97),5px 5px 0 rgb(-63,51,82), 6px 6px 0 rgb(-77,37,68),7px 7px 6px rgba(0,0,0,0.6),7px 7px 1px rgba(0,0,0,0.5),0px 0px 6px rgba(0,0,0,.2);
+}
+header > h2 {
+	color: #89E6FF;
+	font: 1em 'Handlee', cursive;
+	margin-top: 0;
+	text-shadow: 0 0px 2px #000;
+}
+h1 {
+	font: 1.5em "Short Stack",cursive;
+	color: #FF8C43;
+	text-shadow: 0px 0px 1px #000;
+	margin: 0px auto 1%;
+}
+form#scratchpad, .cco, .fl {
+	background: url('../_images/paper.png');
+}
+.shadowed {
+	box-shadow: 0 0 4px 0px #9EA5B4;
+}
+.fl {
+	margin-bottom: 2%;
+	overflow: scroll-y;
+	padding: 1% 2%;
+}
+textarea {
+	background: transparent;
+}
+input[type='submit']{
+	margin: 1% auto;
+}
+input[type='file']{
+	width: 15em;
+}
+nav  li  {
+	border-right: 2px solid #3F3F3F;	
+}
+.top-bar-section li:not(.has-form) a:hover:not(.button) {
+	background: #088A8A;
+}
+.top-bar-section li:not(.has-form) a:active:not(.button) {
+	background: #075353;
+}
+.cco {
+	height: 16em;
+	padding: .5em 1em;
+}
+
+// Small screens
+@media only screen { 
+	
+	} /* Define mobile styles */
+
+// Medium screens
+@media only screen and (min-width: 40.063em) {/* min-width 641px, medium screens */
+
+} 
+
+// Large screens
+@media only screen and (min-width: 64.063em) { 
+
+} /* min-width 1025px, large screens */
+
