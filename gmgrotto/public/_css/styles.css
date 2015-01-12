@@ -103,8 +103,11 @@ input[type='submit']:hover {
 	height: 16em;
 	padding: .5em 1em;
 }
-
-/*	 File Upload	 */
+/*	 File List	 */
+.delete {
+	float:right;
+	color: red;
+}
 .fl {
 	margin-bottom: 2%;
 	padding: 1% 2%;
@@ -114,7 +117,15 @@ input[type='submit']:hover {
 }
 .fl li {
     font-size: .8em;
+    list-style-type: none;
+    padding: 0 1%;
 }
+.fl li:hover {
+	background: #BFF2FF;
+}
+
+/*	 File Upload	 */
+
 input[type='file']{
 	width: 15em;
 }

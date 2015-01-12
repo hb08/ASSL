@@ -56,7 +56,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => '127.0.0.1:8889',
 			'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
-			'database'  => 'gmgrotto',
+			'database'  => 'gmg',
 			'username'  => 'test',
 			'password'  => 'pass',
 			'charset'   => 'utf8',

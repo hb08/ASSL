@@ -46,7 +46,7 @@ class HomeController extends BaseController {
 				Session::put('uid', $uid); // Save UID
 				// Add Filename to User on File Table
 				DB::table('files')->insert(
-					array('uid' => $uid, 'filename' => $filename)
+					array('userid' => $uid, 'filename' => $filename)
 				);
 				
 				// Send back with message
@@ -58,6 +58,13 @@ class HomeController extends BaseController {
 				return Redirect::to('/');
 			}
 		}
+	}
+
+	public function display(){
+		$uid = Session::get('uid');	
+		$fl = DB::table('files')->where('userId', $uid)->get();
+		$db = DB::select("select * from files where userId = {$uid}", array(1));
+		return View::make('hello')->with('filelist', $fl)->with('db', $db);
 	}
 
 }

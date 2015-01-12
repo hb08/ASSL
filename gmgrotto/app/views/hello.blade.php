@@ -37,12 +37,9 @@
 					<div class="bordered_thin fl">
 						Files are listed here
 						<ul>
-							<li>File 1</li>
-							<li>File 2</li>
-							<li>File 3</li>
-							<li>File 4</li>
-							<li>File 5</li>
-							<li>File 6</li>
+							@foreach($filelist as $file)
+							<li>{{ $file -> filename }} <a href=" delete/file/ {{ $file -> fileId }}" class='delete'>X</a> </li>
+							@endforeach
 						</ul>
 					</div>
 					<h1>File Upload</h1>

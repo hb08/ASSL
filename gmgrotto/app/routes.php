@@ -14,22 +14,15 @@
 
 
 Route::any('/', array(
-'before'=> 'auth',
-function()
-{		
-	return View::make('hello');
+'before'=> 'auth', 'uses' => 'HomeController@display', function(){
+	
 }));
-
-Route::get('file_upload', function()
-{
-	return View::make('file_upload');
-});
-
 /*		Registration	*/
 Route::get('register', function()
 {
 	return View::make('register');
 });
+
 /*		Registration Form	*/
 
 Route::post('register', function()
@@ -40,7 +33,7 @@ Route::post('register', function()
 	$user->password = Hash::make(Input::get('password')); // Encrypt password before saving	
 	$user->save();
 	$username = Input::get('username');
-	return View::make('hello');	
+	return View::make('login');	
 });
 
 
@@ -53,11 +46,10 @@ Route::get('login', function()
 /*		Login Form	*/
 Route::post('login', function()
 {
-	$user = Input::get('username');
-	Session::put('uname', $user);
+	$user = Input::get('username');	
 	$credentials = Input::only('username', 'password');
 	if(Auth::attempt($credentials)) {
-		
+		Session::put('uname', $user);
 		return Redirect::intended('/');
 	} 
 		return Redirect::to('login');
@@ -80,8 +72,6 @@ Route::post('/', array('uses' => 'HomeController@upload', function()
 	Session::put('filename', $filename);
 }
 ));
-
-
-
-
-
+Route::get('/delete/file/{file_id}', array('uses' => 'DeleteController@files', function(){
+	
+}));
