@@ -17,12 +17,12 @@
 <body class="columns large-12">
 	<div class="row">
 		<header class="columns large-12">
-			<a href="{{ URL::to('/logout') }}" class='logout right'>Log Out</a>
 			<h1 class="text-center">GameMaster's Grotto</h1>
 		</header>
 	</div>
 	<div  class="row medium-12 large-12">
 			<div class="columns medium-5 large-5">
+				
 				<!-- Scratchpad -->
 				<div class='row'>
 					<h1>Scratchpad</h1>
@@ -35,11 +35,12 @@
 				<div class='row bordered'>
 					<h1>File List</h1>
 					<div class="bordered_thin fl">
-						Files are listed here
 						<ul>
-							@foreach($filelist as $file)
-							<li>{{ $file -> filename }} <a href=" delete/file/ {{ $file -> fileId }}" class='delete'>X</a> </li>
-							@endforeach
+							@if(!empty($filelist))
+								@foreach($filelist as $f)					
+								<li><a href="/view/{{{ $f -> fileId }}}" class="showPanel tog">{{{ $f -> filename }}}</a><a href=" delete/file/ {{{ $f -> fileId }}}" class='delete'>X</a></li>
+								@endforeach
+							@endif						
 						</ul>
 					</div>
 					<h1>File Upload</h1>
@@ -52,8 +53,7 @@
 					
 				</div>
 			</div>
-				
-				
+					
 			<div class="columns medium-6 large-6 medium-offset-1 large-offset-1 text-centered">
 				<!-- Combat Calculator Form-->
 				<div class="row">
@@ -155,37 +155,39 @@
 				</div><!-- End Frame -->
 			</div>	<!-- End of Row	-->	
 		</div>	<!-- End of Column -->
-	</div><!-- End Row -->
-	<div class="row">
-		<!-- Navbar -->
-		<nav class="top-bar" data-topbar role="navigation">
-			<section class="top-bar-section">
-				<ul class="left">
-					<li><a href="#" id="d20" class="tog">D20</a></li>
-					<li><a href="#" id="eg" class="tog">Enemy Generator</a></li>
-				</ul>
-				<ul class="right char">
-					<li><a href="#" id="char1" class="tog">Char 1</a></li>
-					<li><a href="#" id="char2" class="tog">Char 1</a></li>
-					<li><a href="#" id="char3" class="tog">Char 1</a></li>
-					<li><a href="#" id="char4" class="tog">Char 1</a></li>
-					<li><a href="#" id="char5" class="tog">Char 1</a></li>
-					<li><a href="#" id="char6" class="tog">Char 1</a></li>
-					<li><a href="#" id="char7" class="tog">Add</a></li>
-				</ul>
-			</section>
-		</nav>
-	</div>
-	<div class="panel hide" id="overlay">
-		<a href="#" class="tog">X</a>
-		<h1>Panel</h1>
-	</div>
-	
+		
+          <!-- Panel -->
+        <div class="panel hide columns small-12" id="overlay">
+            <a href="/" class="tog exit">X</a>
+            
+        </div><!-- End of Panel -->
+        
+    </div><!-- End Row -->
+    <div class="row">
+        <!-- Navbar -->
+        <nav class="top-bar" data-topbar role="navigation">
+            <section class="top-bar-section">
+                <ul class="left">
+                    <li><a href="#" id="d20" class="tog">D20</a></li>
+                    <li><a href="#" id="eg" class="tog">Enemy Generator</a></li>
+                </ul>
+                <ul class="right char">
+                    <li><a href="#" id="char1" class="tog">Char 1</a></li>
+                    <li><a href="#" id="char2" class="tog">Char 1</a></li>
+                    <li><a href="#" id="char3" class="tog">Char 1</a></li>
+                    <li><a href="#" id="char4" class="tog">Char 1</a></li>
+                    <li><a href="#" id="char5" class="tog">Char 1</a></li>
+                    <li><a href="#" id="char6" class="tog">Char 1</a></li>
+                    <li><a href="#" id="char7" class="tog">Add</a></li>
+                </ul>
+            </section>
+        </nav>
+    </div>
 	<!-- JavaScript/jQuery -->
-	<script src="_js/vendor/jquery.js"></script>
-	<script src="_js/foundation.min.js"></script>
+	<script src="{{asset('_js/vendor/jquery.js')}}"></script>
+	<script src="{{asset('_js/foundation.min.js')}}"></script>
 	  <script>
 	    $(document).foundation();
 	  </script>
-  <script src="_js/scripts.js"></script>
+  <script src="{{asset('_js/scripts.js')}}"></script>
 </html>

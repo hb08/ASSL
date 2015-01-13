@@ -1,21 +1,7 @@
 <?php
 
 class HomeController extends BaseController {
-
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
-
-
+	
 	public function showWelcome()
 	{
 		return View::make('hello');
@@ -37,6 +23,8 @@ class HomeController extends BaseController {
 			if (Input::file('newFile')->isValid()){
 				$user = Session::get('uname');
 				$filename = Input::get('filename');
+                $fileExt = Input::file('newFile')->getClientOriginalExtension();
+				
 				// Saving
 				$destinationPath = 'public/_uploads';
 				Input::file('newFile')->move($destinationPath, $filename); 
@@ -46,7 +34,7 @@ class HomeController extends BaseController {
 				Session::put('uid', $uid); // Save UID
 				// Add Filename to User on File Table
 				DB::table('files')->insert(
-					array('userid' => $uid, 'filename' => $filename)
+					array('userid' => $uid, 'filename' => $filename, 'file_ext' => $fileExt)
 				);
 				
 				// Send back with message
@@ -60,11 +48,22 @@ class HomeController extends BaseController {
 		}
 	}
 
+    
 	public function display(){
 		$uid = Session::get('uid');	
 		$fl = DB::table('files')->where('userId', $uid)->get();
-		$db = DB::select("select * from files where userId = {$uid}", array(1));
-		return View::make('hello')->with('filelist', $fl)->with('db', $db);
+		$sel = "select * from files where userId = " . $uid;
+		$db = "DB::select('" . $sel . "', array(1))";
+		return View::make('hello')->with(array('filelist' => $fl, 'db' => $db));
 	}
+    
+    public function files($fileId) {
+        $uid = Session::get('uid');
+        $fl = DB::table('files')->where('userId', $uid)->get();   
+        $fi = DB::table('files')->where('fileId',$fileId )->get();
+        $sel = "select * from files where userId = " . $uid;
+        $db = "DB::select('" . $sel . "', array(1))";
+        return View::make('hello')->with(array('filelist' => $fl, 'db' => $db, 'fi' => $fi));
+    }
 
 }

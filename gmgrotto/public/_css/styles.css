@@ -9,6 +9,7 @@ body > .row:nth-of-type(2) {
 /*	 Rows	 */
 .row {
 	max-width: 95%;
+	position: relative;
 }
 .row .row {
 	margin: 0 auto;
@@ -49,7 +50,7 @@ h1 {
 }
 .bordered_thin {
 	border-style: solid; 
-	border-width: 20px 22px 23px 18px; 
+	border-width: 5px; 
 	-moz-border-image: url('../_images/frame_thin.png') 20 22 23 18 repeat; 
 	-webkit-border-image: url('../_images/frame_thin.png') 20 22 23 18 repeat; 
 	-o-border-image: url('../_images/frame_thin.png') 20 22 23 18 repeat; 
@@ -156,10 +157,21 @@ nav  li  {
 }
 /*	 Panel	 */
 #overlay {
+	background: url('../_images/paper_yellow.jpg');
+	box-shadow: 0 0 7px 0px #C3B785;
+	clear: both;
+	height: 300px;
+	margin: 0px;
+	padding: 1%;
 	position: absolute;
-	bottom:0;
+		bottom: 0;
+		left: 0px;
+	z-index: 5;
 }
-
+.file {
+	display:none;
+}
+/* 
 
 // Small screens
 @media only screen { 

@@ -1,18 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
-
-
-
 Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
@@ -74,4 +61,8 @@ Route::post('/', array('uses' => 'HomeController@upload', function()
 ));
 Route::get('/delete/file/{file_id}', array('uses' => 'DeleteController@files', function(){
 	
+}));
+
+Route::get('/view/{fileId}', array('uses' => 'HomeController@files', function(){
+    
 }));
