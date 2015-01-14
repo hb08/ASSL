@@ -1,16 +1,39 @@
 <?php
-
+/*****  MAIN    *****/
 Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
 }));
-/*		Registration	*/
+
+
+/*****  UPLOAD FILES    *****/
+    /*      View File */
+Route::get('view/{file}', array('uses' => 'ShowController@files', function(){
+    
+}));
+    /*      Delete File */
+Route::get('delete/file/{file_id}', array('uses' => 'DeleteController@files', function(){
+    
+}));
+    /*      Files Upload    */
+Route::post('/', array('uses' => 'HomeController@upload', function()
+{
+    $filename = Input::get('filename');
+    Session::put('filename', $filename);
+}
+));
+
+/*****  EXIT FILES    *****/
+Route::get('exit', array('uses' => 'HomeController@exitFile', function(){
+      
+}));
+
+/*****  REGISTRATION    *****/
 Route::get('register', function()
 {
 	return View::make('register');
 });
-
-/*		Registration Form	*/
+    /*		Registration Form	*/
 
 Route::post('register', function()
 {
@@ -24,7 +47,7 @@ Route::post('register', function()
 });
 
 
-/*		Login	*/
+/*****  LOGIN    *****/
 Route::get('login', function()
 {
 	return View::make('login');
@@ -34,35 +57,26 @@ Route::get('login', function()
 Route::post('login', function()
 {
 	$user = Input::get('username');	
+    $uid = DB::table('users')->where('username', $user)->pluck('id');
 	$credentials = Input::only('username', 'password');
 	if(Auth::attempt($credentials)) {
+	    Session::put('uid', $uid); // Save UID
 		Session::put('uname', $user);
+        // Database Reference
+        
+       
 		return Redirect::intended('/');
 	} 
 		return Redirect::to('login');
 });
 
 
-/*		Logout	*/
+/*****  LOGOUT    *****/
 Route::get('logout', function()
 {
-	Session::forget('uname');
+	Session::flush();
 	Auth::logout();
 	return View::make('logout');
 });
 
 
-/*		Files Upload	*/
-Route::post('/', array('uses' => 'HomeController@upload', function()
-{
-	$filename = Input::get('filename');
-	Session::put('filename', $filename);
-}
-));
-Route::get('/delete/file/{file_id}', array('uses' => 'DeleteController@files', function(){
-	
-}));
-
-Route::get('/view/{fileId}', array('uses' => 'HomeController@files', function(){
-    
-}));

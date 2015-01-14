@@ -24,17 +24,18 @@ class HomeController extends BaseController {
 				$user = Session::get('uname');
 				$filename = Input::get('filename');
                 $fileExt = Input::file('newFile')->getClientOriginalExtension();
+                $newFileName = $user . "_" . $filename . "." . $fileExt;
 				
 				// Saving
 				$destinationPath = 'public/_uploads';
-				Input::file('newFile')->move($destinationPath, $filename); 
+				Input::file('newFile')->move($destinationPath, $newFileName); 
 				
 				// Database Reference
 				$uid = DB::table('users')->where('username', $user)->pluck('id');
 				Session::put('uid', $uid); // Save UID
 				// Add Filename to User on File Table
 				DB::table('files')->insert(
-					array('userid' => $uid, 'filename' => $filename, 'file_ext' => $fileExt)
+					array('userid' => $uid, 'filename' => $newFileName, 'file_ext' => $fileExt)
 				);
 				
 				// Send back with message
@@ -50,20 +51,21 @@ class HomeController extends BaseController {
 
     
 	public function display(){
-		$uid = Session::get('uid');	
+	    // Set User Id
+		$uid = Session::get('uid');
+        // Find Files for User	
 		$fl = DB::table('files')->where('userId', $uid)->get();
-		$sel = "select * from files where userId = " . $uid;
-		$db = "DB::select('" . $sel . "', array(1))";
-		return View::make('hello')->with(array('filelist' => $fl, 'db' => $db));
-	}
+        if(!empty($fl)) 
+            $fi = Session::get('file');
+            $uname = Session::get('uname');
+            if(!empty($fi)){
+                return View::make('hello', ['filelist' => $fl, 'file' => $fi, 'uname' => $uname]);    
+            }            
+            return View::make('hello', ['filelist' => $fl]);     
+        }
     
-    public function files($fileId) {
-        $uid = Session::get('uid');
-        $fl = DB::table('files')->where('userId', $uid)->get();   
-        $fi = DB::table('files')->where('fileId',$fileId )->get();
-        $sel = "select * from files where userId = " . $uid;
-        $db = "DB::select('" . $sel . "', array(1))";
-        return View::make('hello')->with(array('filelist' => $fl, 'db' => $db, 'fi' => $fi));
-    }
-
+    public function exitFile(){
+        Session::forget('file');  
+        return Redirect::action('HomeController@display');   
+    }		
 }

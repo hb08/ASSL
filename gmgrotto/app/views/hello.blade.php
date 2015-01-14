@@ -35,12 +35,15 @@
 				<div class='row bordered'>
 					<h1>File List</h1>
 					<div class="bordered_thin fl">
-						<ul>
+						<ul>						
 							@if(!empty($filelist))
 								@foreach($filelist as $f)					
-								<li><a href="/view/{{{ $f -> fileId }}}" class="showPanel tog">{{{ $f -> filename }}}</a><a href=" delete/file/ {{{ $f -> fileId }}}" class='delete'>X</a></li>
+								<li><a href="/view/{{{ $f -> fileId }}}" class="oPanel" id="{{{ $f -> fileId }}}">{{{ $f -> filename }}}</a><a href=" delete/file/ {{{ $f -> fileId }}}" class='delete'>X</a></li>
 								@endforeach
-							@endif						
+							@endif	
+							@if(!empty($fi))
+                                {{ $fi }}
+                            @endif  					
 						</ul>
 					</div>
 					<h1>File Upload</h1>
@@ -156,11 +159,17 @@
 			</div>	<!-- End of Row	-->	
 		</div>	<!-- End of Column -->
 		
-          <!-- Panel -->
-        <div class="panel hide columns small-12" id="overlay">
-            <a href="/" class="tog exit">X</a>
-            
-        </div><!-- End of Panel -->
+		@if(isset($file))
+            <!-- Panel -->
+            <div class="panel" id="overlay">
+                <a href="/exit" class="tog exit">X</a>   
+                <h1>{{{$file[0]->filename}}}</h1>
+                @if($file[0]->file_ext == 'jpg')
+                    <img src="_uploads/{{ $file[0]->filename }} " />
+                @endif
+           </div>
+           <!-- End of Panel -->
+        @endif
         
     </div><!-- End Row -->
     <div class="row">
