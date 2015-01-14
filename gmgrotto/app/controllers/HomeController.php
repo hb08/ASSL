@@ -13,10 +13,18 @@ class HomeController extends BaseController {
 		// Set up Rules
 		$rules = array('newFile' => 'required', );
 		// Doing Validation, passing post data, rules
-		$validator = Validator::make($file, $rules);
+		$validator = Validator::make(
+            array(
+
+            ),
+            array(
+
+            )
+        );
 		if ($validator->fails()){
+
 			//send back to page with input data and errors
-			return Redirect::to('/')->withInput()->withErrors($validator);
+			return Redirect::action('HomeController@display',['errors', $errors]);
 		}
 		else {
 			// checking file is valid
@@ -54,15 +62,16 @@ class HomeController extends BaseController {
 	    // Set User Id
 		$uid = Session::get('uid');
         // Find Files for User	
-		$fl = DB::table('files')->where('userId', $uid)->get();
-        if(!empty($fl)) 
-            $fi = Session::get('file');
-            $uname = Session::get('uname');
-            $extPath = Session::get('extPath');
-            if(!empty($fi)){
-                return View::make('hello', ['filelist' => $fl, 'file' => $fi, 'uname' => $uname, 'extPath' => $extPath]);    
-            }            
-            return View::make('hello', ['filelist' => $fl]);     
+		$fl = DB::table('files')->where('userId', $uid)->get();          
+            if(!empty($fl)){ 
+                $fi = Session::get('file');
+                if(!empty($fi)){
+                    $uname = Session::get('uname');
+                    $extPath = Session::get('extPath');
+                    return View::make('hello', ['filelist' => $fl, 'file' => $fi, 'uname' => $uname, 'extPath' => $extPath]);    
+                }            
+                return View::make('hello', ['filelist' => $fl]); 
+            }    
         }
     
     public function exitFile(){

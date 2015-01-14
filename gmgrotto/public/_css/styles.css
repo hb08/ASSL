@@ -6,6 +6,17 @@ body > .row:nth-of-type(2) {
 	font-family: 'Short Stack', cursive;
 	padding: 1% 2%;
 }
+.red {
+	color: red;
+}
+p.note {
+	font-size: .8em;
+	color: #AD5210;
+	margin: 0;
+}
+.larger {
+	font-size: 1.5em;
+}
 /*	 Rows	 */
 .row {
 	max-width: 95%;
@@ -20,7 +31,7 @@ body > .row > .columns > .row {
 }
 
 /*	 Header	 */
-header > h1 {
+body > .row:first-of-type > header > h1 {
 	color: #68C6F2;
 	font: 3em 'Crushed', cursive;
 	margin: 0 auto;
@@ -63,6 +74,7 @@ h1 {
 }
 textarea {
 	background: transparent;
+	font-size: .8em;
 }
 select {
 	font-size: 0.8em;
@@ -105,10 +117,7 @@ input[type='submit']:hover {
 	padding: .5em 1em;
 }
 /*	 File List	 */
-.delete {
-	float:right;
-	color: red;
-}
+
 .fl {
 	margin-bottom: 2%;
 	padding: 1% 2%;
@@ -163,27 +172,57 @@ nav  li  {
 	display: inline-block;
 	height: 450px;
 	margin: 0px;
+	min-width: 23em;
 	overflow-y: scroll;
-	padding: 1%;
+	padding: 1% 2%;
 	position: absolute;
 		bottom: 0;
 		left: 0px;
-	max-width: 1000px;
 	z-index: 5;
 }
-#overlay h1 {
+
+#overlay > header > h1 {
 	display: inline-block;
-	margin-right: 0 0 0 3%;
+	margin-left: 1em;
 }
-#overlay img {
-	display: block;
+#overlay #switchSize {
+	float: right;
+}
+#overlay .content {
+    display: block;
+    height: 400px;
 }
 #overlay object {
 	background: rgba(255, 255, 255, 0.57);
-    display: block;
-    width: 800px;
-    height: 400px;
+	width: 800px;	
+	height: 100%;
 }
+
+
+#overlay.panel.full {
+	height: auto;
+	width: auto;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+}
+#overlay.full > header {
+    text-align: center;
+}
+#overlay.full > header  > h1 {
+    width: 65%;
+}
+#overlay.full #switchSize {
+	float: none;
+}
+#overlay.panel.full .content {
+	height: 100%;
+	width: 100%;
+}
+#overlay.panel.full img {
+	width: auto;
+}
+
 .file {
 	display:none;
 }

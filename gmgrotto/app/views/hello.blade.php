@@ -28,19 +28,19 @@
 				<div class='row'>
 					<h1>Scratchpad</h1>
 					{{Form::open(array('url'=>'index', 'id'=>'scratchpad', 'class'=>'bordered')) }}
-						{{ Form::textarea('notes', '', array('placeholder'=>'Notes')) }}
+						{{ Form::textarea('notes', '', array('placeholder'=>'Notes', 'rows'=> 8)) }}
 						{{ Form:: submit('Save', array('class'=>'large-3 medium-3 columns medium-offset-4 large-offset-4')) }}
 					{{ Form::close() }}		
 				</div>
 				<!-- File Upload -->
 				<div class='row bordered'>
 					<h1>File List</h1>
-					<p>Only images, pdf, txt documents are viewable.</p>
+					<p class='note'>Only images, video, pdf, and txt documents are viewable.</p>
 					<div class="bordered_thin fl">
 						<ul>						
 							@if(!empty($filelist))
 								@foreach($filelist as $f)					
-								<li><a href="/view/{{{ $f -> fileId }}}" class="oPanel" id="{{{ $f -> fileId }}}">{{{ $f -> filename }}}</a><a href=" delete/file/ {{{ $f -> fileId }}}" class='delete'>X</a></li>
+								<li><a href="/view/{{{ $f -> fileId }}}" class="oPanel" id="{{{ $f -> fileId }}}">{{{ $f -> filename }}}</a><a href=" delete/file/ {{{ $f -> fileId }}}" class='red right'>X</a></li>
 								@endforeach
 							@endif	
 							@if(!empty($fi))
@@ -50,9 +50,9 @@
 					</div>
 					<h1>File Upload</h1>
 					{{ Form::open(array('url'=>'/', 'files'=>true, 'method'=>'POST')) }}
-						{{ Form::file('newFile', array('width'=>'75%')); }}
+						{{ Form::file('newFile', array('width'=>'75%', 'required'=>'required')); }}
 						{{ Form::label('filename', 'File Name'); }}
-						{{ Form::text('filename'); }}
+						{{ Form::text('filename'); }} <!-- Make REQUIRED -->
 						{{ Form::submit('Upload') }}
 					{{ Form::close() }}
 					
@@ -163,14 +163,21 @@
 		
 		@if(isset($file))
             <!-- Panel -->
-            <div class="panel" id="overlay">
-                <a href="/exit" class="tog exit">X</a>   
-                <h1>{{{$file[0]->filename}}}</h1>
-                @if($file[0]->file_ext == 'jpg' || $file[0]->file_ext == 'jpeg' || $file[0]->file_ext == 'png')
-                    <img src="_uploads/{{ $extPath }} " />
-                @else
-                    <object data="_uploads/{{ $extPath}}"></object>
-                @endif
+            <div class="panel row" id="overlay">
+                <header>
+                    <a href="/exit" class="tog red larger">X</a>   
+                    <h1>{{{$file[0]->filename}}}</h1>
+                    <a href="#" id="switchSize" class="larger">Large</a>
+                </header>
+                <div class="content text-center">
+                    @if(in_array($file[0]->file_ext, array("png", "jpg", "jpeg", "gif")))
+                        <img src="_uploads/{{ $extPath }} " />
+                    @elseif(in_array($file[0]->file_ext, array("txt", "pdf", "mp4", "mp3", "mov", "swf")))
+                        <object data="_uploads/{{ $extPath}}"></object>
+                    @else
+                        <p>Sorry, but {{{ $file[0]->file_ext }}} file types are unable to be viewed in the browser.</p>
+                    @endif
+                </div>
            </div>
            <!-- End of Panel -->
         @endif
