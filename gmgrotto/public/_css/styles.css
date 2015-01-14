@@ -113,8 +113,16 @@ input[type='submit']:hover {
     margin-bottom: 1em;
 }
 .cco {
+	display: block;
 	height: 16em;
 	padding: .5em 1em;
+}
+.cco > p {
+	margin-bottom: 0;
+}
+.cco > p > span {
+	display: block;
+	font-size: .6em;
 }
 /*	 File List	 */
 

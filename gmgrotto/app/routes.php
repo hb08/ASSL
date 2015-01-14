@@ -5,6 +5,11 @@ Route::any('/', array(
 	
 }));
 
+/*****  COMBAT CALCULATOR   *****/
+    /*      Files Upload    */
+Route::post('/fight', array('uses' => 'CalcController@fight', function(){
+
+    }));
 
 /*****   FILES    *****/
     /*      View File */

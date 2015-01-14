@@ -4,7 +4,7 @@ class HomeController extends BaseController {
 	
 	public function showWelcome()
 	{
-		return View::make('hello');
+		return View::make('pages.hello');
 	}
 	
 	public function upload() {
@@ -15,7 +15,7 @@ class HomeController extends BaseController {
 		// Doing Validation, passing post data, rules
 		$validator = Validator::make(
             array(
-
+                
             ),
             array(
 
@@ -61,18 +61,31 @@ class HomeController extends BaseController {
 	public function display(){
 	    // Set User Id
 		$uid = Session::get('uid');
-        // Find Files for User	
-		$fl = DB::table('files')->where('userId', $uid)->get();          
-            if(!empty($fl)){ 
-                $fi = Session::get('file');
-                if(!empty($fi)){
-                    $uname = Session::get('uname');
-                    $extPath = Session::get('extPath');
-                    return View::make('hello', ['filelist' => $fl, 'file' => $fi, 'uname' => $uname, 'extPath' => $extPath]);    
-                }            
-                return View::make('hello', ['filelist' => $fl]); 
-            }    
-        }
+        
+        // User Files	
+		$fl = DB::table('files')->where('userId', $uid)->get(); 
+        if(!empty($fl)){ 
+             
+        }else {
+           $fl = null;
+        } 
+        
+
+            $combRes = Session::get('combRes');    
+
+        
+        // Individual File Check  
+        if(!empty($fi)){
+            $uname = Session::get('uname');
+            $extPath = Session::get('extPath');
+            $fi = Session::get('file');               
+        }else {
+            $uname = Session::get('uname');
+            $extPath = null;
+            $fi = null;
+        }       
+        return View::make('pages.hello', ['filelist' => $fl, 'file' => $fi, 'combRes' => $combRes, 'uname' => $uname, 'extPath' => $extPath]);
+    } 
     
     public function exitFile(){
         Session::forget('file');  

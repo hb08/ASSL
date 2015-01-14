@@ -16,6 +16,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'users';
 
+
+    static public function rollDice($min, $max) {
+       $roll = rand( $min, $max) ; 
+       return $roll;
+    }
+    
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
