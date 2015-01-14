@@ -178,6 +178,12 @@ nav  li  {
 #overlay img {
 	display: block;
 }
+#overlay object {
+	background: rgba(255, 255, 255, 0.57);
+    display: block;
+    width: 800px;
+    height: 400px;
+}
 .file {
 	display:none;
 }

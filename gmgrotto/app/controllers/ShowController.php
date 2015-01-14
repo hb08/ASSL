@@ -8,10 +8,11 @@ class ShowController extends BaseController {
         
         // Pull File
         $data = DB::table('files')->where('fileId', $fileId)->get();
-        $filename = Session::get('filename');
-        $uname = Session::get('uname');
+        $username = Session::get('uname');
+        $extPath = $username . "_" . $data[0]->filename . "." . $data[0]->file_ext;
         Session::put('file', $data);
-        return Redirect::to('/');
+        Session::put('extPath', $extPath);
+        return Redirect::action('HomeController@display');
     }
 
 }

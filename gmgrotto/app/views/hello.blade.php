@@ -18,6 +18,7 @@
 	<div class="row">
 		<header class="columns large-12">
 			<h1 class="text-center">GameMaster's Grotto</h1>
+			<a href="logout" class="right">Logout</a>
 		</header>
 	</div>
 	<div  class="row medium-12 large-12">
@@ -34,6 +35,7 @@
 				<!-- File Upload -->
 				<div class='row bordered'>
 					<h1>File List</h1>
+					<p>Only images, pdf, txt documents are viewable.</p>
 					<div class="bordered_thin fl">
 						<ul>						
 							@if(!empty($filelist))
@@ -164,8 +166,10 @@
             <div class="panel" id="overlay">
                 <a href="/exit" class="tog exit">X</a>   
                 <h1>{{{$file[0]->filename}}}</h1>
-                @if($file[0]->file_ext == 'jpg')
-                    <img src="_uploads/{{ $file[0]->filename }} " />
+                @if($file[0]->file_ext == 'jpg' || $file[0]->file_ext == 'jpeg' || $file[0]->file_ext == 'png')
+                    <img src="_uploads/{{ $extPath }} " />
+                @else
+                    <object data="_uploads/{{ $extPath}}"></object>
                 @endif
            </div>
            <!-- End of Panel -->

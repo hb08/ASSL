@@ -24,18 +24,18 @@ class HomeController extends BaseController {
 				$user = Session::get('uname');
 				$filename = Input::get('filename');
                 $fileExt = Input::file('newFile')->getClientOriginalExtension();
-                $newFileName = $user . "_" . $filename . "." . $fileExt;
+                $uploadName = $user . "_" . $filename . "." . $fileExt;
 				
 				// Saving
 				$destinationPath = 'public/_uploads';
-				Input::file('newFile')->move($destinationPath, $newFileName); 
+				Input::file('newFile')->move($destinationPath, $uploadName); 
 				
 				// Database Reference
 				$uid = DB::table('users')->where('username', $user)->pluck('id');
 				Session::put('uid', $uid); // Save UID
 				// Add Filename to User on File Table
 				DB::table('files')->insert(
-					array('userid' => $uid, 'filename' => $newFileName, 'file_ext' => $fileExt)
+					array('userid' => $uid, 'filename' => $filename, 'file_ext' => $fileExt)
 				);
 				
 				// Send back with message
@@ -58,8 +58,9 @@ class HomeController extends BaseController {
         if(!empty($fl)) 
             $fi = Session::get('file');
             $uname = Session::get('uname');
+            $extPath = Session::get('extPath');
             if(!empty($fi)){
-                return View::make('hello', ['filelist' => $fl, 'file' => $fi, 'uname' => $uname]);    
+                return View::make('hello', ['filelist' => $fl, 'file' => $fi, 'uname' => $uname, 'extPath' => $extPath]);    
             }            
             return View::make('hello', ['filelist' => $fl]);     
         }
