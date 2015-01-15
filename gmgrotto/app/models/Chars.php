@@ -1,6 +1,5 @@
 <?php  
-class Chars extends Eloquent { 
-           
+class Chars extends Eloquent {           
     static public function fight(){     
         // Input Variables
         $charName = Input::get('charName');

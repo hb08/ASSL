@@ -29,7 +29,7 @@
                 {{ Form::file('newFile', array('width'=>'75%', 'required'=>'required')); }}
                 {{ Form::label('filename', 'File Name'); }}
                 {{ Form::text('filename', '', array( 'required' => 'required')); }}
-                {{ Form::submit('Upload') }}
+                {{ Form::submit('Upload', array('class'=>'large-3 medium-3 columns medium-offset-4 large-offset-4')) }}
             {{ Form::close() }}
             
         </div><!-- End of Row -->
@@ -42,21 +42,16 @@
                 <div class="bordered">
                     <div class="row">
                         {{ Form::open(array('url'=>'/fight', 'method' => 'POST', 'id'=>'combCalc', 'class'=>'columns medium-12 large-12 bordered_thin')) }}
+                        @if(!empty($charsList))
                         <div class="row medium-12 large-12">
-                            {{ Form::text('charName', 'Daisy')}}
-                            <p class='medium-2 large-2 columns text-center'> uses </p>
-                            {{ Form::text('attackName', 'Blast')}}
-                            <p class='medium-2 large-2 columns text-center'> for </p>
-                            {{ Form::number('attackScore', 5 )}}
-                            <p class='medium-1 large-1 columns text-center'> vs </p>
-                            {{ Form::text('enemyName', null, ['placeholder' => 'Bob The Enemy' ])}}
-                            <p class='medium-2 large-2 columns text-center'> for </p>
-                            {{ Form::number('defenseScore', null, ['placeholder' => 16 ])}}
-                            <p class='medium-2 large-2 columns text-center'> for </p>
-                            {{ Form::number('toughSave', null, ['placeholder' => 5 ])}}
-
-                        </div>                          
-                            {{ Form::submit('Fight!') }} 
+                            <select class="columns medium-3 large-3">
+                                @foreach($charsList as $char) }}
+                                <option value='charName'>{{$char -> charName}}</option>                                                                 
+                                 @endforeach   
+                             </select>  
+                        </div>
+                        @endif                          
+                            {{ Form::submit('Fight!', array('class'=>'large-3 medium-3 columns medium-offset-5 large-offset-5')) }}
                         {{ Form::close() }}
                     </div>
                     <div class='row'>
@@ -80,10 +75,13 @@
                 <a href="#" id="switchSize" class="larger">Large</a>
             </header>
             <div class="content text-center">
+                // If An Image
                 @if(in_array($file[0]->file_ext, array("png", "jpg", "jpeg", "gif")))
                     <img src="_uploads/{{ $extPath }} " />
+                // If Any Other Acceptable
                 @elseif(in_array($file[0]->file_ext, array("txt", "pdf", "mp4", "mp3", "mov", "swf")))
                     <object data="_uploads/{{ $extPath}}"></object>
+                // Anything Else
                 @else
                     <p>Sorry, but {{{ $file[0]->file_ext }}} file types are unable to be viewed in the browser.</p>
                 @endif
