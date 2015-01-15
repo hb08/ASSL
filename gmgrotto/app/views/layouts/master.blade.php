@@ -11,12 +11,6 @@
     </div>
     <div  class="row medium-12 large-12">
             @yield('content')
-    </div><!-- End Row -->
-    <div class="row">
-        <!-- Navbar -->
-        <nav class="top-bar" data-topbar role="navigation">
-            @include('includes.navbar')    
-        </nav>
-    </div>
+    
     @include('includes.footer')
 </html>

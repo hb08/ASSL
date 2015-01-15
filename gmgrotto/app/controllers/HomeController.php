@@ -69,22 +69,22 @@ class HomeController extends BaseController {
         }else {
            $fl = null;
         } 
+        // Check Combat
+        $combRes = Chars::fight();    
+        // Set Navbar
+        $charsList = DB::select('select * from charList where userId = ?', array($uid));
         
-
-            $combRes = Session::get('combRes');    
-
-        
+        $fi = Session::get('file');
         // Individual File Check  
         if(!empty($fi)){
             $uname = Session::get('uname');
-            $extPath = Session::get('extPath');
-            $fi = Session::get('file');               
+            $extPath = Session::get('extPath');                      
         }else {
             $uname = Session::get('uname');
-            $extPath = null;
-            $fi = null;
+            $extPath = NULL;
+            $fi = NULL;
         }       
-        return View::make('pages.hello', ['filelist' => $fl, 'file' => $fi, 'combRes' => $combRes, 'uname' => $uname, 'extPath' => $extPath]);
+        return View::make('pages.hello', ['filelist' => $fl, 'file' => $fi, 'combRes' => $combRes, 'uname' => $uname, 'extPath' => $extPath, 'charsList' => $charsList]);
     } 
     
     public function exitFile(){

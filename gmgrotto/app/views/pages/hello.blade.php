@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 <!-- Start of Left Column -->  
-    <div class="columns medium-5 large-5">    
+    <div class="columns medium-5 large-5">   
         <!-- Scratchpad -->
         <div class='row'><!-- Start of Row -->
             <h1>Scratchpad</h1>
@@ -21,10 +21,7 @@
                         @foreach($filelist as $f)                   
                         <li><a href="/view/{{{ $f -> fileId }}}" class="oPanel" id="{{{ $f -> fileId }}}">{{{ $f -> filename }}}</a><a href=" delete/file/ {{{ $f -> fileId }}}" class='red right'>X</a></li>
                         @endforeach
-                    @endif  
-                    @if(!empty($fi))
-                        {{ $fi }}
-                    @endif                      
+                    @endif                        
                 </ul>
             </div><!-- End Bordered_Thin -->
             <h1>File Upload</h1>
@@ -41,7 +38,7 @@
     <div class="columns medium-6 large-6 medium-offset-1 large-offset-1 text-centered">
         <!-- Combat Calculator Form-->
         <div class="row">
-            <h1>Combat Calculator</h1>
+            <h1>Combat Calculator</h1> 
                 <div class="bordered">
                     <div class="row">
                         {{ Form::open(array('url'=>'/fight', 'method' => 'POST', 'id'=>'combCalc', 'class'=>'columns medium-12 large-12 bordered_thin')) }}
@@ -94,4 +91,24 @@
        </div>
        <!-- End of Panel -->
     @endif
+</div><!-- End Row -->
+    <div class="row">
+        <!-- Navbar -->
+        <nav class="top-bar" data-topbar role="navigation">
+            <section class="top-bar-section">
+                <ul class="left">
+                    <li><a href="#" id="d20" class="tog">D20</a></li>
+                    <li><a href="#" id="eg" class="tog">Enemy Generator</a></li>
+                </ul>
+                <ul class="right char"> 
+                    @if(isset($charsList))
+                        @foreach($charsList as $chars)
+                        <li><a href="#" id="{{{ $chars -> charId }}}" class="tog">{{{ $chars -> charName }}}</a></li>                            
+                        @endforeach   
+                    @endif
+                    <li><a href="#" id="addChar" class="tog">Add</a></li>
+                </ul>
+            </section> 
+        </nav>
+    </div>    
 @stop

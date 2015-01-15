@@ -4,12 +4,11 @@
         <li><a href="#" id="eg" class="tog">Enemy Generator</a></li>
     </ul>
     <ul class="right char">
-        <li><a href="#" id="char1" class="tog">Char 1</a></li>
-        <li><a href="#" id="char2" class="tog">Char 1</a></li>
-        <li><a href="#" id="char3" class="tog">Char 1</a></li>
-        <li><a href="#" id="char4" class="tog">Char 1</a></li>
-        <li><a href="#" id="char5" class="tog">Char 1</a></li>
-        <li><a href="#" id="char6" class="tog">Char 1</a></li>
-        <li><a href="#" id="char7" class="tog">Add</a></li>
+        @if(isset($charList))
+            @foreach($charList as $char)
+                <li><a href="{{$char =>'charId'}}">{{ $char => 'charName' }}</a></li>
+            @endforeach
+        @endif
+        <li><a href="#" id="addChar" class="tog">Add</a></li>
     </ul>
 </section>

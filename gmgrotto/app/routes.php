@@ -7,7 +7,7 @@ Route::any('/', array(
 
 /*****  COMBAT CALCULATOR   *****/
     /*      Files Upload    */
-Route::post('/fight', array('uses' => 'CalcController@fight', function(){
+Route::post('/fight', array('uses' => 'HomeController@display', function(){
 
     }));
 

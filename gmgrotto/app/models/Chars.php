@@ -1,20 +1,7 @@
-<?php
-
-class CalcController extends BaseController {
-    public function display($uid){
-        $charName = DB::select('select * from users where id=');
-        $attackName = Input::get('attackName');
-        $enemyName = Input::get('enemyName');
-        $attackScore = Input::get('attackScore');
-        $defenseScore = Input::get('defenseScore');
-        $enemyToughness = Input::get('toughSave');
-        
-        
-    }    
-
-    public function fight() {
-        Session::forget('combRes');
-        
+<?php  
+class Chars extends Eloquent { 
+           
+    static public function fight(){     
         // Input Variables
         $charName = Input::get('charName');
         $attackName = Input::get('attackName');
@@ -95,10 +82,6 @@ class CalcController extends BaseController {
             $combRes .= "<span>Attack Damage: {$calcDamage['ad']}  |   VS | Enemy Toughness: {$enemyToughness} Defense Roll: {$calcDamage['dRoll']}<span></p><hr/>";
         }
         // Save complete message to session
-        Session::put('combRes', $combRes);
-        return Redirect::action('HomeController@display');  
+        return  $combRes; 
     }
-    
-    
-
-}
+}  

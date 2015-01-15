@@ -25,6 +25,7 @@ class TableSetup extends Migration {
 			$newtable->increments('fileId');
 			$newtable->string('userId', 128);
 			$newtable->string('filename', 100);
+            $newtable->string('file_ext', 5);
 			$newtable->string('remember_token', 100);
 			$newtable->timestamps();
 		});
@@ -44,6 +45,7 @@ class TableSetup extends Migration {
 			$newtable->string('remember_token', 100);
 			$newtable->timestamps();
 		});
+        
 	}
 
 	/**
