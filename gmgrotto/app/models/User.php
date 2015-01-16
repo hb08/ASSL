@@ -18,7 +18,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
        return $roll;
     }
     
-
+    // Convert Object to Array
+    static public function makeArray($o){
+        // If this is an object
+        if(is_object($o)){
+            // Get the properties
+            $o = get_object_vars($o);
+        }// Otherwise
+        else{
+            // Keep it the Same
+            $o = $o;    
+        }
+        return $o;
+        
+    }
 	
 
 }

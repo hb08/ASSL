@@ -20,10 +20,9 @@
 			<h1 class="text-center">GameMaster's Grotto</h1>
 		</header>
 	</div>
-	<div  class="row medium-12 large-12">
-			<div class="columns medium-5 large-5 centered">
+	<div  class="row medium-12 large-12 fullHeight">
+			<div class="columns medium-5 large-5 large-centered small-centered vert-center">
 				<!-- Registration -->
-				<div class='row'>
 					<h1>Login</h1>
 					      {{ Form::open(array('url'=>'login')) }}
 					      	{{ Form::label('username', 'Username') }}
@@ -32,13 +31,12 @@
 					      	{{ Form::label('password', 'Password') }}
 					      	{{ Form::password('password') }}
 					      	
-							{{ Form::submit('Log In!') }}
+							{{ Form::submit('Log In!', array("class" => 'centerB')) }}
 					
 					      {{ Form::close() }}  
-				</div>
-			</div>	<!-- End of Row	-->	
-		</div>	<!-- End of Column -->
-	</div><!-- End Row -->
+					      <p class="text-center">Not Registered? <a href="register">Sign up today!</a></p>
+			</div>	<!-- End of Column -->
+		</div>	<!-- End of Row    --> 
 	<div class="row">
 		<!-- Navbar -->
 		<nav class="top-bar" data-topbar role="navigation">

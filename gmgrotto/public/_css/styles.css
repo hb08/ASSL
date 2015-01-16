@@ -17,6 +17,18 @@ p.note {
 .larger {
 	font-size: 1.5em;
 }
+.highlight {
+	background: #FFC79E;
+}
+.centerB {
+	display: block;
+}
+.fullHeight {
+	height: 40em;
+}
+.vert-center {
+	top: 10%;
+}
 /*	 Rows	 */
 .row {
 	max-width: 95%;
@@ -79,7 +91,7 @@ textarea {
 select {
 	font-size: 0.8em;
 	height: auto;
-	padding: 1% 0;
+	padding: .5% 0;
 }
 input[type='submit']{
 	background: #abddff;
@@ -110,6 +122,14 @@ input[type='submit']:hover {
 
 /*	 Combat Calculator	 */
 #combCalc p {
+    margin-bottom: 0;
+}
+#combCalc input {
+    padding: 2.5% 3%;
+    height: auto;
+}
+#combCalc .bottomborder {
+    border-bottom: 1px solid #B8CBD1;
     margin-bottom: 1em;
 }
 .cco {
@@ -124,6 +144,7 @@ input[type='submit']:hover {
 	display: block;
 	font-size: .6em;
 }
+
 /*	 File List	 */
 
 .fl {

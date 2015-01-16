@@ -35,7 +35,7 @@
         </div><!-- End of Row -->
     </div><!-- End of Column -->
 <!-- Start of Right Column -->             
-    <div class="columns medium-6 large-6 medium-offset-1 large-offset-1 text-centered">
+    <div class="columns medium-7 large-7 text-centered">
         <!-- Combat Calculator Form-->
         <div class="row">
             <h1>Combat Calculator</h1> 
@@ -43,22 +43,48 @@
                     <div class="row">
                         {{ Form::open(array('url'=>'/fight', 'method' => 'POST', 'id'=>'combCalc', 'class'=>'columns medium-12 large-12 bordered_thin')) }}
                         @if(!empty($charsList))
-                        <div class="row medium-12 large-12">
-                            <select class="columns medium-3 large-3">
-                                @foreach($charsList as $char) }}
-                                <option value='charName'>{{$char -> charName}}</option>                                                                 
-                                 @endforeach   
-                             </select>  
-                        </div>
+                            @foreach($charsList as $char)
+                            <div class="row bottomborder">
+                                <div class="row medium-12 large-12">                                                                           
+                                        <p class='medium-4 large-4 columns text-center highlight'> {{$char->charName}}</p>                                 
+                                        <p class='medium-2 large-2 columns text-center'> uses </p>
+                                        <select class='medium-4 large-4 columns end' name='{{$char->charId}}_attackName'>
+                                                <option value="melee">Melee</option>
+                                                <option value="ranged">Ranged</option>
+                                                <option value="gen_attack">General Attacks</option>
+                                            @foreach($char->attacks as $a)
+                                                <option value="{{$a -> attack_name}}">{{$a -> attack_name}}</option> 
+                                            @endforeach                                       
+                                        </select>  
+                                </div>
+                                <div class="row medium-12 large-12">  
+                                    <p class='medium-1 large-1 columns medium-centered large-centered text-center'> vs </p>
+                                </div>
+                                <div class="row medium-12 large-12">   
+                                        <div class='medium-3 large-3 columns'>
+                                            <input type="text" name="{{$char->charId}}_enemyName" placeholder="Enemy Name">
+                                        </div>         
+                                        <p class='medium-1 large-1 columns text-center'> for </p>
+                                        <div class='medium-3 large-3 columns'>
+                                            <input type="number" name="{{$char->charId}}_defenseScore" placeholder="Defense">
+                                        </div>  
+                                        <p class='medium-1 large-1 columns text-center end'> and </p>
+                                        <div class='medium-3 large-3 columns'>                                            
+                                            <input type="number" name="{{$char->charId}}_toughSave" placeholder="Toughness">
+                                        </div>  
+                                </div>                                                               
+                             </div>   
+                            @endforeach    
                         @endif                          
                             {{ Form::submit('Fight!', array('class'=>'large-3 medium-3 columns medium-offset-5 large-offset-5')) }}
                         {{ Form::close() }}
+                        
                     </div>
                     <div class='row'>
                         <h1>Results</h1>
                         <div class="cco bordered_thin">
                             @if(isset($combRes))
-                              {{ $combRes }}
+
                             @endif
                         </div>
                     </div>          

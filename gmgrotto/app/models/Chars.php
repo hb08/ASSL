@@ -1,14 +1,65 @@
 <?php  
-class Chars extends Eloquent {           
-    static public function fight(){     
+class Chars extends Eloquent {
+    protected $table = 'charList';
+      
+    static public function getAttacks($uid){
+        $start = DB::select('SELECT * FROM charList INNER JOIN char_comb ON charList.charId=char_comb.charId WHERE userId = ?', array($uid));
+        
+        foreach($start as $char){
+            // Get Their Attacks
+            $attacks = DB::select('SELECT attack_name, attack_score FROM char_attacks WHERE charId = ?', array($char->charId));
+         
+            // Push attacks to char array
+            $char->attacks = $attacks;  
+            // Calculate Initiative
+            $i = $char -> initiative;
+            $roll = User::rollDice(1,20);
+            $ooi = $i + $roll;
+            $char->order = $ooi;
+        }        
+        return $start;
+    }
+             
+    static public function fight(){
+        $uid = Session::get('uid');
+        $charList = DB::select('SELECT charList.charId, userId, charName, defense, gen_attack, melee, ranged, tough, attack_name, attack_score FROM charList INNER JOIN char_comb ON charList.charId=char_comb.charId INNER JOIN char_attacks ON charList.charId=char_attacks.charId WHERE userId = ?', array($uid));
+    
+        
+        function getInputs($input, $charList){
+            $inputValues = "";
+            foreach($charList as $char){
+                $inputName = $char->charId . "_" . $input;
+                $result = Input::get($inputName);
+                $inputValues = array_add($inputValues, $char->charName, $result);
+            }       
+            return $inputValues;             
+        }
+        
+        function getAttackScores($attackNames, $charList){
+            $start = "";
+            foreach($charList as $char){
+                $charId = $char->charId;
+                $charName = $char->charName;
+                $attackName = $attackNames[$charName]; 
+                $score = DB::select('SELECT attack_score FROM char_attacks WHERE charId = ? AND attack_name = ?', array($charId, $attackName));
+                $results = "";
+                foreach($score as $s){
+                    $results = $s->attack_score;    
+                }
+                $start = array_add($start, $charName, $results);                                                          
+            }
+            return $start;      
+        }
+        
         // Input Variables
-        $charName = Input::get('charName');
-        $attackName = Input::get('attackName');
-        $enemyName = Input::get('enemyName');
-        $attackScore = Input::get('attackScore');
-        $defenseScore = Input::get('defenseScore');
-        $enemyToughness = Input::get('toughSave');
-          
+        $attackNames = getInputs('attackName', $charList);
+        $enemyNames = getInputs('enemyName', $charList);
+        $attackScores = getAttackScores($attackNames, $charList);
+        $defenseScores = getInputs('defenseScore', $charList);
+        $toughnessScores = getInputs('toughSave', $charList);
+                
+        $combRes = array('attackNames' => $attackNames, 'attackScores' => $attackScores, 'enemyNames' => $enemyNames,  'defenseScores' => $defenseScores, 'toughnessScores' => $toughnessScores);  
+/*         
         function attackResults($as, $ds){
             $attack = $as;
             $defense = $ds;
@@ -80,6 +131,8 @@ class Chars extends Eloquent {
             $combRes .= "<p>". $enemyName . " is " . $calcDamage['res'];
             $combRes .= "<span>Attack Damage: {$calcDamage['ad']}  |   VS | Enemy Toughness: {$enemyToughness} Defense Roll: {$calcDamage['dRoll']}<span></p><hr/>";
         }
+ * 
+ */
         // Save complete message to session
         return  $combRes; 
     }

@@ -72,7 +72,7 @@ class HomeController extends BaseController {
         // Check Combat
         $combRes = Chars::fight();    
         // Set Navbar
-        $charsList = DB::select('select * from charList where userId = ?', array($uid));
+        $charsList = Chars::getAttacks($uid); 
         
         $fi = Session::get('file');
         // Individual File Check  

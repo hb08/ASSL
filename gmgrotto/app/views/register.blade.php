@@ -21,8 +21,8 @@
 			<h1 class="text-center">GameMaster's Grotto</h1>
 		</header>
 	</div>
-	<div  class="row medium-12 large-12">
-			<div class="columns medium-5 large-5 centered">
+	<div  class="row medium-12 large-12 fullHeight">
+			<div class="columns medium-5 large-5 large-centered small-centered vert-center">
 				<!-- Registration -->
 				<div class='row'>
 					<h1>Register Today!</h1>
@@ -36,7 +36,7 @@
 					      	{{ Form::label('password', 'Password') }}
 					      	{{ Form::password('password') }}
 					      	
-							{{ Form::submit('Sign Up!') }}
+							{{ Form::submit('Sign Up!', array("class" => 'centerB')) }}
 					
 					      {{ Form::close() }}  
 				</div>
