@@ -51,7 +51,7 @@
                                         <select class='medium-4 large-4 columns end' name='{{$char->charId}}_attackName'>
                                                 <option value="melee">Melee</option>
                                                 <option value="ranged">Ranged</option>
-                                                <option value="gen_attack">General Attacks</option>
+                                                <option value="gen_attack">General Attack</option>
                                             @foreach($char->attacks as $a)
                                                 <option value="{{$a -> attack_name}}">{{$a -> attack_name}}</option> 
                                             @endforeach                                       
@@ -84,7 +84,7 @@
                         <h1>Results</h1>
                         <div class="cco bordered_thin">
                             @if(isset($combRes))
-
+                              {{ $combRes }}
                             @endif
                         </div>
                     </div>          
@@ -101,13 +101,13 @@
                 <a href="#" id="switchSize" class="larger">Large</a>
             </header>
             <div class="content text-center">
-                // If An Image
+                <!-- If An Image -->
                 @if(in_array($file[0]->file_ext, array("png", "jpg", "jpeg", "gif")))
                     <img src="_uploads/{{ $extPath }} " />
-                // If Any Other Acceptable
+                <!--  If Any Other Acceptable-->
                 @elseif(in_array($file[0]->file_ext, array("txt", "pdf", "mp4", "mp3", "mov", "swf")))
                     <object data="_uploads/{{ $extPath}}"></object>
-                // Anything Else
+                <!--  Anything Else -->
                 @else
                     <p>Sorry, but {{{ $file[0]->file_ext }}} file types are unable to be viewed in the browser.</p>
                 @endif

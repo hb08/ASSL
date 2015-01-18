@@ -29,6 +29,9 @@ p.note {
 .vert-center {
 	top: 10%;
 }
+.cco hr {
+    margin: .5em 0;
+}
 /*	 Rows	 */
 .row {
 	max-width: 95%;
@@ -41,7 +44,6 @@ p.note {
 body > .row > .columns > .row {
 	margin-bottom: 2%;	
 }
-
 /*	 Header	 */
 body > .row:first-of-type > header > h1 {
 	color: #68C6F2;
@@ -143,6 +145,7 @@ input[type='submit']:hover {
 .cco > p > span {
 	display: block;
 	font-size: .6em;
+	margin-left: 1em;
 }
 
 /*	 File List	 */

@@ -4,12 +4,11 @@ Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
 }));
-
 /*****  COMBAT CALCULATOR   *****/
 Route::post('/fight', array('uses' => 'HomeController@display', function(){
 
-    }));
-
+    }));  
+    
 /*****   FILES    *****/
     /*      View File */
 Route::get('view/{file}', array('uses' => 'ShowController@files', function(){
@@ -75,5 +74,8 @@ Route::get('logout', function(){
 	Auth::logout();
 	return View::make('logout');
     });
+    
+    
+  
 
 
