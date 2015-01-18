@@ -57,6 +57,13 @@ class HomeController extends BaseController {
 		}
 	}
 
+
+    public function fight(){
+        $combRes = Chars::fight(); 
+        Session::put('combRes', $combRes);    
+        return Redirect::to('/');           
+    }
+
     
 	public function display(){
 	    // Set User Id
@@ -70,7 +77,8 @@ class HomeController extends BaseController {
            $fl = null;
         } 
         // Check Combat
-        $combRes = Chars::fight();    
+        $combRes = Session::get('combRes');
+        
         // Set Navbar
         $charsList = Chars::getAttacks($uid); 
         

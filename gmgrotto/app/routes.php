@@ -3,10 +3,10 @@
 Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
-}));
+    }));
 /*****  COMBAT CALCULATOR   *****/
-Route::post('/fight', array('uses' => 'HomeController@display', function(){
-
+Route::post('/fight', array('uses' => 'HomeController@fight', function(){
+    
     }));  
     
 /*****   FILES    *****/
