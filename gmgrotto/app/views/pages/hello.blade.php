@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="row medium-12 large-12">   
                                         <div class='medium-3 large-3 columns'>
-                                            <input type="text" name="{{$char->charId}}_enemyName" placeholder="Enemy Name">
+                                            <input type="text" name="{{$char->charId}}_enemyName" placeholder="Enemy Name" >
                                         </div>         
                                         <p class='medium-1 large-1 columns text-center'> for </p>
                                         <div class='medium-3 large-3 columns'>

@@ -14,6 +14,9 @@ p.note {
 	color: #AD5210;
 	margin: 0;
 }
+p.indent {
+	text-indent: 1em;
+}
 .larger {
 	font-size: 1.5em;
 }
@@ -30,7 +33,12 @@ p.note {
 	top: 10%;
 }
 .cco hr {
-    margin: .5em 0;
+    margin: 0.5em 0px;
+	border-style: dashed;
+	border-color: #CFCFFF;
+}
+.bold {
+    font-weight: bold;
 }
 /*	 Rows	 */
 .row {
@@ -137,15 +145,22 @@ input[type='submit']:hover {
 .cco {
 	display: block;
 	height: 16em;
+	overflow-y: scroll;
 	padding: .5em 1em;
 }
 .cco > p {
+	font-size: .9em;
 	margin-bottom: 0;
 }
 .cco > p > span {
 	display: block;
 	font-size: .6em;
-	margin-left: 1em;
+	margin-left: 1.5em;
+}
+.cco > p.bold {
+	border-bottom: 1px solid #919192;
+	margin-bottom: 1em;
+	padding-bottom: .5em;
 }
 
 /*	 File List	 */

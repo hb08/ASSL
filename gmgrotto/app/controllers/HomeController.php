@@ -61,7 +61,7 @@ class HomeController extends BaseController {
     public function fight(){
         $combRes = Chars::fight(); 
         Session::put('combRes', $combRes);    
-        return Redirect::to('/');           
+        return Redirect::to('/')->withInput();           
     }
 
     

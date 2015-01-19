@@ -65,7 +65,11 @@ class Chars extends Eloquent {
         $attackScores = getAttackScores($attackNames, $charList);
         $defenseScores = getInputs('defenseScore', $charList);
         $toughnessScores = getInputs('toughSave', $charList);
-
+        
+        // Save old Inputs to Session        
+        $oldValues = ['enemyNames' => $enemyNames, 'defenseScores' => $defenseScores, 'toughnessScores' => $toughnessScores];
+        Session::put('oldInput', $oldValues);
+        
         function attackResults($as, $ds, $uid, $list){
             $attack = $as;
             $defense = $ds;
@@ -130,27 +134,29 @@ class Chars extends Eloquent {
        
         // Calculate Attack
         $attackResults = attackResults($attackScores, $defenseScores, $uid, $list);        
-    
-        $mess = "";
+
+        
+        $mess = "<p class='bold text-center'>Round</p>";         
+        
         foreach($list as $char){                                
             $charName = $char->charName;
             $arCall = $attackResults[$charName];
-            if($enemyNames[$charName] == ""){
-                $mess ="";
-            }else{
-                if($attackNames[$charName] == "gen_attack"){
-                    $attackNames[$charName] = "a general attack" ;   
-                }
-                $mess .= "<p>". $charName . " used " . $attackNames[$charName] .  " against " . $enemyNames[$charName] . " and " . $arCall['res'];  
-                $mess .= "<span> Attack: {$attackScores[$charName]}  Attack Roll: {$arCall['roll']} |  VS  | Defense Results: {$defenseScores[$charName]}</span></p>"; 
-                if($arCall['res'] == 'succeeds!'){
-                    $calcDamage = calcDamage($attackScores[$charName], $toughnessScores[$charName], $arCall['roll']); 
-                    $mess .= "<p>". $enemyNames[$charName] . " is " . $calcDamage['res'];
-                    $mess .= "<span>Attack Damage: {$calcDamage['ad']}  |   VS | Enemy Toughness: {$toughnessScores[$charName]} Defense Roll: {$calcDamage['dRoll']}<span></p><hr/>";                       
-                }
+            if($attackNames[$charName] == "gen_attack"){
+                $attackNames[$charName] = "a general attack" ;   
             }
-        }   
-
+            $mess .= "<p>". $charName . " used " . $attackNames[$charName] .  " against " . $enemyNames[$charName] . " and " . $arCall['res'];  
+            $mess .= "<span> Attack: {$attackScores[$charName]}  Attack Roll: {$arCall['roll']} |  VS  | Defense Results: {$defenseScores[$charName]}</span></p>"; 
+            if($arCall['res'] == 'succeeds!'){
+                $calcDamage = calcDamage($attackScores[$charName], $toughnessScores[$charName], $arCall['roll']); 
+                $mess .= "<p class='indent'>". $enemyNames[$charName] . " is " . $calcDamage['res'];
+                $mess .= "<span>Attack Damage: {$calcDamage['ad']}  |   VS | Enemy Toughness: {$toughnessScores[$charName]} Defense Roll: {$calcDamage['dRoll']}<span></p><hr/>";                       
+            }
+        } 
+        if(!empty(Session::get('combRes'))){
+            $oldMess = Session::get('combRes');
+            $mess .= $oldMess;
+        } 
+       
         // Save complete message to session
         return  $mess; 
     }
