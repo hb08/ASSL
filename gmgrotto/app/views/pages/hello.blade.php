@@ -93,46 +93,12 @@
     </div>  <!-- End of Column -->
     
     @if(isset($file))
-    <!-- Panel -->
-        <div class="panel row" id="overlay">
-            <header>
-                <a href="/exit" class="tog red larger">X</a>   
-                <h1>{{{$file[0]->filename}}}</h1>
-                <a href="#" id="switchSize" class="larger">Large</a>
-            </header>
-            <div class="content text-center">
-                <!-- If An Image -->
-                @if(in_array($file[0]->file_ext, array("png", "jpg", "jpeg", "gif")))
-                    <img src="_uploads/{{ $extPath }} " />
-                <!--  If Any Other Acceptable-->
-                @elseif(in_array($file[0]->file_ext, array("txt", "pdf", "mp4", "mp3", "mov", "swf")))
-                    <object data="_uploads/{{ $extPath}}"></object>
-                <!--  Anything Else -->
-                @else
-                    <p>Sorry, but {{{ $file[0]->file_ext }}} file types are unable to be viewed in the browser.</p>
-                @endif
-            </div>
-       </div>
-       <!-- End of Panel -->
+        @include('includes.panel', ['file', $file])
     @endif
+    
+
+    
 </div><!-- End Row -->
-    <div class="row">
-        <!-- Navbar -->
-        <nav class="top-bar" data-topbar role="navigation">
-            <section class="top-bar-section">
-                <ul class="left">
-                    <li><a href="#" id="d20" class="tog">D20</a></li>
-                    <li><a href="#" id="eg" class="tog">Enemy Generator</a></li>
-                </ul>
-                <ul class="right char"> 
-                    @if(isset($charsList))
-                        @foreach($charsList as $chars)
-                        <li><a href="#" id="{{{ $chars -> charId }}}" class="tog">{{{ $chars -> charName }}}</a></li>                            
-                        @endforeach   
-                    @endif
-                    <li><a href="#" id="addChar" class="tog">Add</a></li>
-                </ul>
-            </section> 
-        </nav>
-    </div>    
+@include('includes.navbar', ['charsList', $charsList])
+      
 @stop

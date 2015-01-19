@@ -71,6 +71,14 @@ h1 {
 	text-shadow: 0px 0px 1px #000;
 	margin: 0px auto 1%;
 }
+/*	Footer 	*/
+footer{
+	margin-top: 1em;
+}
+footer > p {
+    font-size: .7em;
+    margin-bottom: 0;
+}
 /*	 Borders	 */
 .bordered {
 	border-style: solid; 
@@ -194,8 +202,11 @@ nav li:first-of-type {
 nav  li  {
 	border-right: 3px solid #000;	
 }
-.top-bar {
+nav {
 	border-top: 3px solid rgb(0, 0, 0);
+}
+nav ul {
+	border-bottom: 3px solid rgb(0, 0, 0);
 }
 .top-bar-section li:not(.has-form) a:hover:not(.button) {
 	background: #1AA0C5;
