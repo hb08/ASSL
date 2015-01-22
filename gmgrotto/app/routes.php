@@ -4,11 +4,24 @@ Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
     }));
-/*****  ADD CHARACTER  *****/     
-    /* Submit Chracter */
+/*****  ADD CHARACTER  *****/ 
+Route::get('/addChar', array('uses' => 'ShowController@addForm', function(){
+   
+    }));   
+    /* Submit Character */
 Route::post('/char', array('uses' => 'CharController@addChar', function(){
     
-})) ;  
+    })) ; 
+    /* Close Character Panel */ 
+Route::get('/exitChar', array('uses' => 'ShowController@exitChar', function(){
+    
+    }));
+
+/*****  View Character  *****/ 
+Route::get('/char/view/{charId}', array('uses' => 'ShowController@showChar', function(){
+    
+    }));
+
 /*****  COMBAT CALCULATOR   *****/
 Route::post('/fight', array('uses' => 'HomeController@fight', function(){
     

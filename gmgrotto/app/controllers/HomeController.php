@@ -84,12 +84,11 @@ class HomeController extends BaseController {
         
         // Set Select Lists for Char Form
         $feats = DB::table('featsList')->get();
-        Session::set('feats', $feats);
+        Session::put('feats', $feats);
         $powers = DB::table('powersList')->get();
-        Session::set('powers', $powers);
+        Session::put('powers', $powers);
         $skills = DB::table('skillsList')->get();
-        Session::set('skills', $skills);
-        
+        Session::put('skills', $skills);
         
         
         $fi = Session::get('file');

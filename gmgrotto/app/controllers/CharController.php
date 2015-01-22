@@ -165,13 +165,7 @@ class CharController extends Controller {
                     )
                 );    
        }
-        
-        echo "<pre>";
-        print_r($input);
-        echo  "</pre>";        
-
-
- //       return Redirect::action('HomeController@display');
+      return Redirect::action('HomeController@display');
     }
 
 }

@@ -1,5 +1,12 @@
 @extends('layouts.master')
 @section('content')
+
+    @if(!empty(Session::get('char')))
+    <pre>
+        {{ print_r(Session::get('char')) }}
+    </pre>
+    @endif
+
 <!-- Start of Left Column -->  
     <div class="columns medium-5 large-5">   
         <!-- Scratchpad -->
@@ -97,7 +104,13 @@
         @include('includes.panel', ['file', $file])
     @endif
     
-    @include('includes.addForm')
+    @if(Session::get('addChar') == 'add')
+        @include('includes.addForm')
+    @endif
+    
+    @if(!empty(Session::get('charShow')))
+        @include('includes.charForm', array('charShow' => Session::get('charShow'), 'skills' => Session::get('skills'), 'feats' => Session::get('feats') ))
+    @endif
     
 </div><!-- End Row -->
 @include('includes.navbar', ['charsList', $charsList])
