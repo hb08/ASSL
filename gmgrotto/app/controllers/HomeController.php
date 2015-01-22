@@ -82,6 +82,16 @@ class HomeController extends BaseController {
         // Set Navbar
         $charsList = Chars::getAttacks($uid); 
         
+        // Set Select Lists for Char Form
+        $feats = DB::table('featsList')->get();
+        Session::set('feats', $feats);
+        $powers = DB::table('powersList')->get();
+        Session::set('powers', $powers);
+        $skills = DB::table('skillsList')->get();
+        Session::set('skills', $skills);
+        
+        
+        
         $fi = Session::get('file');
         // Individual File Check  
         if(!empty($fi)){

@@ -82,6 +82,7 @@
                     </div>
                     <div class='row'>
                         <h1>Results</h1>
+                        <a href="/clear">Clear Results</a>
                         <div class="cco bordered_thin">
                             @if(isset($combRes))
                               {{ $combRes }}
@@ -96,7 +97,7 @@
         @include('includes.panel', ['file', $file])
     @endif
     
-
+    @include('includes.addForm')
     
 </div><!-- End Row -->
 @include('includes.navbar', ['charsList', $charsList])

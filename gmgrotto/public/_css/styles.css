@@ -61,7 +61,7 @@ body > .row:first-of-type > header > h1 {
 }
 header > h2 {
 	color: #89E6FF;
-	font: 1em 'Handlee', cursive;
+	font: 1em 'Handlee', cursive;;
 	margin-top: 0;
 	text-shadow: 0 0px 2px #000;
 }
@@ -70,6 +70,12 @@ h1 {
 	color: #FF8C43;
 	text-shadow: 0px 0px 1px #000;
 	margin: 0px auto 1%;
+}
+h2 {
+    font: 1.3em 'Short Stack', cursive;
+}
+h3 {
+    font: 1em 'Short Stack', cursive;
 }
 /*	Footer 	*/
 footer{
@@ -256,11 +262,10 @@ nav ul {
 	height: 100%;
 }
 
-
 #overlay.panel.full {
 	height: auto;
 	width: auto;
-	position: fixed;
+	position: absolute;
 	top: 0px;
 	right: 0px;
 }
@@ -284,16 +289,37 @@ nav ul {
 .file {
 	display:none;
 }
-/* 
+/*  Char Form   */
+#newChar {
+    margin-top: 1em;
+    padding: 1% 0;
+}
+#newChar > .row {
+    background-color: rgba(255, 255, 255, 0.73);
+    margin-bottom: 1em;
+}
+#newChar .row .row {
+    margin: 0px 1em;
+}
+#newChar h2 {
+    background: #8DD1FE;
+    padding: 0.2em 0px;
+}
+#newChar select {
+    padding: .7em 0;
+}
+.vert label {
+    vertical-align: middle;
+} 
 
 // Small screens
 @media only screen { 
-	
-	} /* Define mobile styles */
+
+} 
 
 // Medium screens
 @media only screen and (min-width: 40.063em) {/* min-width 641px, medium screens */
-
+    
 } 
 
 // Large screens

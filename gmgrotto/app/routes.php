@@ -4,6 +4,11 @@ Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
     }));
+/*****  ADD CHARACTER  *****/     
+    /* Submit Chracter */
+Route::post('/char', array('uses' => 'CharController@addChar', function(){
+    
+})) ;  
 /*****  COMBAT CALCULATOR   *****/
 Route::post('/fight', array('uses' => 'HomeController@fight', function(){
     
