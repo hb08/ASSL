@@ -65,9 +65,10 @@ class CharController extends Controller {
                 );
      
          // Update Char Attacks If they exist
+            // Remove old 
+               DB::table('char_attacks')->where('charId', $charId)->delete();
                 if(!empty($input['aa1_name']) && !empty($input['aa1_score'])){
-                    DB::table('char_attacks')->where('charId', $charId)
-                        ->update( array(
+                    DB::table('char_attacks')->insert( array(
                         'charId' => $charId, 
                         'attack_name' => $input['aa1_name'],
                         'attack_score' => $input['aa1_score']
@@ -75,8 +76,7 @@ class CharController extends Controller {
                     );
                 }
                 if(!empty($input['aa2_name']) && !empty($input['aa2_score'])){
-                    DB::table('char_attacks')->where('charId', $charId)
-                        ->update( array(
+                    DB::table('char_attacks')->insert( array(
                         'charId' => $charId, 
                         'attack_name' => $input['aa2_name'],
                         'attack_score' => $input['aa2_score']
@@ -84,8 +84,7 @@ class CharController extends Controller {
                     );
                 }
                 if(!empty($input['aa3_name']) && !empty($input['aa3_score'])){
-                    DB::table('char_attacks')->where('charId', $charId)
-                        ->update( array(
+                    DB::table('char_attacks')->insert( array(
                         'charId' => $charId, 
                         'attack_name' => $input['aa3_name'],
                         'attack_score' => $input['aa3_score']
@@ -93,8 +92,7 @@ class CharController extends Controller {
                     );
                 }
                 if(!empty($input['aa4_name']) && !empty($input['aa4_score'])){
-                    DB::table('char_attacks')->where('charId', $charId)
-                        ->update( array(
+                    DB::table('char_attacks')->insert( array(
                         'charId' => $charId, 
                         'attack_name' => $input['aa4_name'],
                         'attack_score' => $input['aa4_score']
@@ -179,10 +177,7 @@ class CharController extends Controller {
                }
      
            Session::forget('charShow');
-           return Redirect::action('HomeController@display');  
-
-
-
+           return Redirect::to('/');
     }
     
     
@@ -350,7 +345,7 @@ class CharController extends Controller {
                     )
                 );    
        }
-
+        Session::forget('addChar');
       return Redirect::action('HomeController@display');
     }
 
