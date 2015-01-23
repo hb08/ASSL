@@ -1,12 +1,5 @@
 @extends('layouts.master')
 @section('content')
-
-    @if(!empty(Session::get('char')))
-    <pre>
-        {{ print_r(Session::get('char')) }}
-    </pre>
-    @endif
-
 <!-- Start of Left Column -->  
     <div class="columns medium-5 large-5">   
         <!-- Scratchpad -->
@@ -67,18 +60,18 @@
                                 <div class="row medium-12 large-12">  
                                     <p class='medium-1 large-1 columns medium-centered large-centered text-center'> vs </p>
                                 </div>
-                                <div class="row medium-12 large-12">   
+                                <div class="row medium-12 large-12">  
                                         <div class='medium-3 large-3 columns'>
-                                            <input type="text" name="{{$char->charId}}_enemyName" placeholder="Enemy Name" >
+                                            <input type="text" name="{{$char->charId}}_enemyName" placeholder="Enemy Name" @if(!empty(Session::get('oldInput'))) value="{{{Session::get('oldInput')['enemyNames'][$char->charName]}}}" @endif >
                                         </div>         
                                         <p class='medium-1 large-1 columns text-center'> for </p>
                                         <div class='medium-3 large-3 columns'>
-                                            <input type="number" name="{{$char->charId}}_defenseScore" placeholder="Defense">
+                                            <input type="number" name="{{$char->charId}}_defenseScore" placeholder="Defense" @if(!empty(Session::get('oldInput'))) value="{{{Session::get('oldInput')['defenseScores'][$char->charName]}}}" @endif >
                                         </div>  
                                         <p class='medium-1 large-1 columns text-center end'> and </p>
                                         <div class='medium-3 large-3 columns'>                                            
-                                            <input type="number" name="{{$char->charId}}_toughSave" placeholder="Toughness">
-                                        </div>  
+                                            <input type="number" name="{{$char->charId}}_toughSave" placeholder="Toughness" @if(!empty(Session::get('oldInput'))) value="{{{Session::get('oldInput')['toughnessScores'][$char->charName]}}}" @endif >
+                                        </div> 
                                 </div>                                                               
                              </div>   
                             @endforeach    
@@ -88,9 +81,9 @@
                         
                     </div>
                     <div class='row'>
-                        <h1>Results</h1>
-                        <a href="/clear">Clear Results</a>
-                        <div class="cco bordered_thin">
+                        <h1 class="columns small-7 large-8">Results</h1>
+                        <a href="/clear" class="columns small-5 large-4 duck">Clear Results</a>
+                        <div class="columns small-12 cco bordered_thin">
                             @if(isset($combRes))
                               {{ $combRes }}
                             @endif
@@ -109,7 +102,7 @@
     @endif
     
     @if(!empty(Session::get('charShow')))
-        @include('includes.charForm', array('charShow' => Session::get('charShow'), 'skills' => Session::get('skills'), 'feats' => Session::get('feats') ))
+        @include('includes.charForm', array('charShow' => Session::get('charShow'), 'skills' => Session::get('skills'), 'feats' => Session::get('feats'), 'powers' => Session::get('powers') ))
     @endif
     
 </div><!-- End Row -->

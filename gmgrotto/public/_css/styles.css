@@ -17,6 +17,9 @@ p.note {
 p.indent {
 	text-indent: 1em;
 }
+.duck {
+    top: .25em;
+}
 .larger {
 	font-size: 1.5em;
 }

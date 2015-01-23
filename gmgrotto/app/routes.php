@@ -4,7 +4,9 @@ Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
     }));
-/*****  ADD CHARACTER  *****/ 
+    
+    
+/*****  CHARACTERS  *****/ 
 Route::get('/addChar', array('uses' => 'ShowController@addForm', function(){
    
     }));   
@@ -14,18 +16,29 @@ Route::post('/char', array('uses' => 'CharController@addChar', function(){
     })) ; 
     /* Close Character Panel */ 
 Route::get('/exitChar', array('uses' => 'ShowController@exitChar', function(){
-    
     }));
 
-/*****  View Character  *****/ 
+    /* View Character  */ 
 Route::get('/char/view/{charId}', array('uses' => 'ShowController@showChar', function(){
     
     }));
-
+    /* Edit Character */
+Route::post('/edit/{charId}', array('uses' => 'CharController@editChar', function(){
+    
+    })) ; 
+    /* Delete Character */
+Route::get('/delete/char/{charId}', array('uses' => 'DeleteController@deleteChar', function(){
+    
+    }));    
 /*****  COMBAT CALCULATOR   *****/
 Route::post('/fight', array('uses' => 'HomeController@fight', function(){
     
-    }));  
+    })); 
+    
+Route::get('/clear', array('uses' => 'CalcController@clearComb', function(){
+    
+    }));
+     
     
 /*****   FILES    *****/
     /*      View File */
@@ -42,7 +55,7 @@ Route::post('/', array('uses' => 'HomeController@upload', function(){
         Session::put('filename', $filename);
     }));
 
-/*****  EXIT FILES    *****/
+    /*      Exit File    */
 Route::get('exit', array('uses' => 'HomeController@exitFile', function(){
       
     }));

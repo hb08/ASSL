@@ -1,6 +1,11 @@
 <?php
 
 class CalcController extends BaseController {
+    public function clearComb(){
+        Session::forget('combRes');
+        return Redirect::action('HomeController@display');    
+    }
+        
     public function display($uid){
         $charName = DB::select('select * from users where id=');
         $attackName = Input::get('attackName');

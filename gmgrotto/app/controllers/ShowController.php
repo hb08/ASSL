@@ -1,7 +1,6 @@
 <?php
 
-class ShowController extends BaseController {
-
+class ShowController extends BaseController {    
     public function files($file_Id) {
         // FileId Files
         $fileId = $file_Id;
@@ -36,12 +35,17 @@ class ShowController extends BaseController {
         $charComb = DB::table('char_comb')->where('charId', $charId)->get();       
         $charDB = DB::table('char_drawbacks')->where('char_id', $charId)->get();       
         $charFeats= DB::select('
-                       SELECT feat_name, feat_ranks
-                       FROM char_feats 
-                       INNER JOIN featsList 
-                       WHERE char_feats.feat_id = featsList.feat_id 
-                       AND char_feats.char_id = ?', array($charId));       
-        $charPowers = DB::table('char_powers')->where('char_id', $charId)->get();       
+                        SELECT feat_name, feat_ranks
+                        FROM char_feats 
+                        INNER JOIN featsList 
+                        WHERE char_feats.feat_id = featsList.feat_id 
+                        AND char_feats.char_id = ?', array($charId));       
+        $charPowers = DB::select('
+                        SELECT power_name, power_ranks, notes
+                        FROM char_powers 
+                        INNER JOIN powersList 
+                        WHERE char_powers.power_id = powersList.power_id 
+                        AND char_powers.char_id = ?', array($charId));       
         $charSkills = DB::select('
                         SELECT skill_name, skill_total, skill_ranks, skill_abil 
                         FROM char_skills 
@@ -51,6 +55,7 @@ class ShowController extends BaseController {
 
         // Make a big array
         $char = array(
+            'id' => $charId,
             'codeName' => $charName, 
             'abilities' => $charAbilities, 
             'attacks' => $charAttacks, 

@@ -21,5 +21,11 @@ class DeleteController extends BaseController {
 		
 		return Redirect::to('/');
 	}
+    public function deleteChar($charId){
+        DB::table('charList')->where('charId', $charId)->delete();
+        Session::forget('addChar');
+        Session::forget('charShow');
+        return Redirect::action('HomeController@display'); 
+    }
 
 }
