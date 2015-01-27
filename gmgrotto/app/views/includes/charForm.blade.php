@@ -2,7 +2,7 @@
         <div class="panel row full" id="overlay">
             
             <header>
-                <a href="exitChar" class="red ">X</a>   
+                <a href="exit/panel" class="red ">X</a>   
                 <h1>{{ $charShow['codeName'] }}</h1>
                 <a href="/delete/char/{{{$charShow['id']}}}" class="red">Delete</a>
             </header> 

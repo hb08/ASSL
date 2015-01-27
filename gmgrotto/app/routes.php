@@ -4,8 +4,17 @@ Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
     }));
+/*****  DICE ROLLER  *****/ 
+Route::get('/dice', array('uses'=>'ShowController@dice', function(){
     
+    }));
+Route::post('/roll', array('uses'=>'ShowController@roll', function(){
     
+    }));
+/*****  SCRATCHPAD  *****/  
+Route::post('/save', array('uses' => 'ScratchpadController@save', function(){
+   
+    }));   
 /*****  CHARACTERS  *****/ 
 Route::get('/addChar', array('uses' => 'ShowController@addForm', function(){
    
@@ -14,13 +23,10 @@ Route::get('/addChar', array('uses' => 'ShowController@addForm', function(){
 Route::post('/char', array('uses' => 'CharController@addChar', function(){
     
     })) ; 
-    /* Close Character Panel */ 
-Route::get('/exitChar', array('uses' => 'ShowController@exitChar', function(){
-    }));
 
     /* View Character  */ 
 Route::get('/char/view/{charId}', array('uses' => 'ShowController@showChar', function(){
-    
+
     }));
     /* Edit Character */
 Route::post('/edit/{charId}', array('uses' => 'CharController@editChar', function(){
@@ -56,8 +62,8 @@ Route::post('/', array('uses' => 'HomeController@upload', function(){
     }));
 
     /*      Exit File    */
-Route::get('exit', array('uses' => 'HomeController@exitFile', function(){
-      
+Route::get('exit/{what}', array('uses' => 'HomeController@exitForget', function(){
+
     }));
 
 /*****  REGISTRATION    *****/

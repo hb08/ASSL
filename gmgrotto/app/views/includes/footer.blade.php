@@ -4,6 +4,8 @@
     <p class="text-center">All other content is continued under the share-alike provision by Harmony Betancourt 2015&copy;</p>
 </footer>
     <script src="{{asset('_js/vendor/jquery.js')}}"></script>
+    <script src="{{asset('_js/vendor/modernizr.js')}}"></script>
+    <script src="{{asset('_js/vendor/placeholder.js')}}"></script>
     <script src="{{asset('_js/foundation.min.js')}}"></script>
       <script>
         $(document).foundation();

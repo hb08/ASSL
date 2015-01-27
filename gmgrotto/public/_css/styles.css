@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Crushed|Handlee|Short+Stack);
+@import url(http://fonts.googleapis.com/css?family=Crushed|Handlee|Lobster|Short+Stack);
 body{
     background: url('../_images/paper.png');
  }
@@ -16,6 +16,9 @@ p.note {
 }
 p.indent {
 	text-indent: 1em;
+}
+panel h1 {
+    color: #000;   
 }
 .duck {
     top: .25em;
@@ -63,7 +66,7 @@ body > .row:first-of-type > header > h1 {
 	text-shadow:0px 0px 0 rgb(10,124,155),1px 1px 0 rgb(-5,109,140),2px 2px 0 rgb(-19,95,126),3px 3px 0 rgb(-34,80,111),4px 4px 0 rgb(-48,66,97),5px 5px 0 rgb(-63,51,82), 6px 6px 0 rgb(-77,37,68),7px 7px 6px rgba(0,0,0,0.6),7px 7px 1px rgba(0,0,0,0.5),0px 0px 6px rgba(0,0,0,.2);
 }
 header > h2 {
-	color: #89E6FF;
+	color: #000;
 	font: 1em 'Handlee', cursive;;
 	margin-top: 0;
 	text-shadow: 0 0px 2px #000;
@@ -80,6 +83,7 @@ h2 {
 h3 {
     font: 1em 'Short Stack', cursive;
 }
+
 /*	Footer 	*/
 footer{
 	margin-top: 1em;
@@ -106,7 +110,138 @@ footer > p {
 	-o-border-image: url('../_images/frame_thin.png') 20 22 23 18 repeat; 
 	border-image: url('../_images/frame_thin.png') 20 22 23 18 fill repeat;
 }
-
+/*   Dice Roller  */
+#overlay.dice {
+    height: 600px;
+    width: 30em;
+}
+a.toggleForm {
+    background: rgba(154, 228, 255, 0.6);
+    background-image: url('../_images/arrow_d.png');
+    background-size: 100% 100%;
+    color: #000;
+    cursor:pointer;
+    font-size: 1em;
+    z-index: 1;
+}
+a.toggleForm.up {
+    background-image: url('../_images/arrow_u.png');
+}
+.diceResults {
+    background: url('../_images/dice.png') no-repeat;
+    background-size: 100% 100%;
+    margin-top: 2em;
+    height: 5em;
+    width: 5em;
+}
+.diceResults h1 {
+    color: #000;
+    font-family: "Lobster", cursive;
+    height: 100%;
+    padding-top: .9em;
+    padding-right: .4em;
+}
+/*   Dice Results  */
+.readOut {
+    background: url('../_images/dice_bg.png') repeat;
+    padding: 1em;
+}
+.readOut span.hBlue, .readOut span.hOrange {
+    display: inline-block;
+    padding: 0 1em;
+}
+.readOut span.hGreen, .readOut span.hRed {
+    display: inline-block;
+    padding: 0 .5em;
+    margin-left: .5em ;   
+}
+.readOut span.hGreen {
+    background: rgba(58, 255, 4, 0.26);
+}
+.readOut span.hRed {
+    background: rgba(255, 4, 4, 0.26);
+}
+.readOut span.total {
+    display: inline-block;
+    background: rgba(250, 228, 0, 0.28);
+    padding: 0 1em;
+}
+.readOut span.hBlue{
+    background: rgba(135, 218, 253, 0.36);
+}
+.readOut span.hOrange {
+    background: rgba(255, 184, 115, 0.5);
+}
+.readOut span.dice{
+    background: url('../_images/dice.png') no-repeat;
+    background-size: 100% 100%;
+    width: 3.5em;
+    height: 3.5em;
+    padding-top: .8em;
+    display: inline-block;
+    padding-right: .3em;
+    color: #000;
+}
+.readOut > div {
+    border-bottom: 1px solid #839FB6;
+    margin-bottom: 1em;
+    padding-bottom: .5em;
+}
+.readOut div p {
+    font-size: .8em;
+    margin-bottom: 0;
+    text-align: left;
+}
+.readOut div p > span {
+    display: block;
+    font-size: .8em;
+    text-align: center;
+}
+/*   Dice Form  */
+#diceRoll input {
+    font-size: .8em;
+    padding-left: .4em;
+}
+#diceRoll input[type='submit']{
+    margin-top: 1em;
+    padding: 0;
+}
+#diceRoll > .row > h2 {
+    margin-top: .5em;
+}
+.
+#diceRoll {
+    margin-top: 1em;
+}
+#diceRoll a.toggleForm, #diceRoll h2 {
+    margin: 1em auto .5em;
+    text-align: left;
+}
+#diceRoll select > option.start {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    font-weight: bold;
+}
+input[type="number"].dice {
+        width: 25%;
+}
+#diceRoll label.character {
+    background: rgba(255, 189, 114, 0.64);
+    line-height: 1.2em;
+    min-height: 2.8em;
+    font-size: .8em;
+    padding-top: 2%;
+    width: 30.333333%;
+    margin-right: 3%;
+}
+#diceRoll select {
+    padding: .5rem;
+}
+#diceRoll > div.row > hr {
+    margin-top: .5em;
+    border-color: rgba(0, 196, 242, 0.64);
+}
 /*	 Scratchpad	 */
 #scratchpad {
 	padding-bottom: 1.5em;

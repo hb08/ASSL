@@ -1,12 +1,6 @@
 <?php
 
-class HomeController extends BaseController {
-	
-	public function showWelcome()
-	{
-		return View::make('pages.hello');
-	}
-	
+class HomeController extends BaseController {	
 	public function upload() {
 		// Getting Post Data
 		$file = array('newFile' => Input::file('newFile'));
@@ -57,13 +51,11 @@ class HomeController extends BaseController {
 		}
 	}
 
-
     public function fight(){
         $combRes = Chars::fight(); 
         Session::put('combRes', $combRes);    
         return Redirect::to('/')->withInput();           
     }
-
     
 	public function display(){
 	    // Set User Id
@@ -82,6 +74,9 @@ class HomeController extends BaseController {
         // Set Navbar
         $charsList = Chars::getAttacks($uid); 
         
+        // Check Notes
+        $currentNotes = DB::table('scratchpad')->where('userId', $uid)->pluck('notes');
+        
         // Set Select Lists for Char Form
         $feats = DB::table('featsList')->get();
         Session::put('feats', $feats);
@@ -89,7 +84,6 @@ class HomeController extends BaseController {
         Session::put('powers', $powers);
         $skills = DB::table('skillsList')->get();
         Session::put('skills', $skills);
-        
         
         $fi = Session::get('file');
         // Individual File Check  
@@ -101,11 +95,18 @@ class HomeController extends BaseController {
             $extPath = NULL;
             $fi = NULL;
         }       
-        return View::make('pages.hello', ['filelist' => $fl, 'file' => $fi, 'combRes' => $combRes, 'uname' => $uname, 'extPath' => $extPath, 'charsList' => $charsList]);
+        return View::make('pages.hello', ['filelist' => $fl, 'file' => $fi, 'combRes' => $combRes, 'uname' => $uname, 'extPath' => $extPath, 'charsList' => $charsList, 'notes' => $currentNotes]);
     } 
     
-    public function exitFile(){
-        Session::forget('file');  
+    public function exitForget($what){
+        if($what == 'dice'){
+            Session::forget('rolls');
+            Session::forget('dice');                 
+        }else{
+            Session::forget('file'); 
+            Session::forget('addChar');
+            Session::forget('charShow'); 
+        }
         return Redirect::action('HomeController@display');   
     }		
 }

@@ -1,5 +1,12 @@
 $(document).ready(function(){
- 
+	$('.toggleForm').click(function(e){
+		e.preventDefault();
+		
+		$show = $(this).next('.showForm');
+		$($show).toggleClass('hide');
+		$(this).toggleClass('up');
+	});
+
  // Change panel width  
   $("#switchSize").click(function(e){
   	e.preventDefault();
@@ -14,3 +21,5 @@ $(document).ready(function(){
   	$('#switchSize').html($message);
   });  
 }); // End jQuery
+
+

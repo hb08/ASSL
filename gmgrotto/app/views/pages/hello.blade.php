@@ -5,8 +5,8 @@
         <!-- Scratchpad -->
         <div class='row'><!-- Start of Row -->
             <h1>Scratchpad</h1>
-            {{Form::open(array('url'=>'index', 'id'=>'scratchpad', 'class'=>'bordered')) }}
-                {{ Form::textarea('notes', '', array('placeholder'=>'Notes', 'rows'=> 8)) }}
+            {{Form::open(array('url'=>'/save', 'id'=>'scratchpad', 'class'=>'bordered')) }}
+                <textarea rows="8" placeholder="Notes" name="notes">{{{ $notes or ''}}}</textarea>
                 {{ Form:: submit('Save', array('class'=>'large-3 medium-3 columns medium-offset-4 large-offset-4')) }}
             {{ Form::close() }}     
         </div><!-- End of Row -->
@@ -103,6 +103,10 @@
     
     @if(!empty(Session::get('charShow')))
         @include('includes.charForm', array('charShow' => Session::get('charShow'), 'skills' => Session::get('skills'), 'feats' => Session::get('feats'), 'powers' => Session::get('powers') ))
+    @endif
+    
+    @if(Session::get('dice') == 'show')
+        @include('includes.panel_dice', array('saves' => Session::get('saves'), 'skillSelect' => Session::get('skillSelect'), 'names' => Session::get('names'), 'powers' => Session::get('powersSelect'), 'rolls' => Session::get('rolls') ))
     @endif
     
 </div><!-- End Row -->

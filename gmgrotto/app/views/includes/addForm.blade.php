@@ -1,7 +1,7 @@
     <!-- Panel Add Form -->
         <div class="panel row full" id="overlay">
             <header>
-                <a href="exitChar" class="tog red ">X</a>   
+                <a href="exit/panel" class="tog red ">X</a>   
                 <h1>Add New Character</h1>
             </header>
 

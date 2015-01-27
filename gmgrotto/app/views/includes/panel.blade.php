@@ -1,7 +1,7 @@
     <!-- Panel -->
         <div class="panel row" id="overlay">
             <header>
-                <a href="/exit" class="tog red larger">X</a>   
+                <a href="/exit/panel" class="tog red larger">X</a>   
                 <h1>{{{$file[0]->filename}}}</h1>
                 <a href="#" id="switchSize" class="larger">Large</a>
             </header>
