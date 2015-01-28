@@ -14,6 +14,12 @@
                     </div>
                     {{ Form::submit('Roll Character') }}
                 {{ Form::close() }}
+                @if(count($details) > 0)
+                    <p>Details exist!</p>
+                    <pre>
+                        {{print_r($details);}}
+                    </pre>  
+                @endif  
             </div>
        </div>
        <!-- End of Panel -->
