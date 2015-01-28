@@ -1,6 +1,11 @@
 <?php
 
 class ShowController extends BaseController {
+    public function gen(){
+        Session::put('gen' , 'open');
+        Session::put('size', '');
+        return Redirect::action('HomeController@display');
+    }
     public function roll(){
         $inputs = Input::all();
         $names = Session::get('names');

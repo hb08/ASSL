@@ -4,7 +4,7 @@
             <section class="top-bar-section">
                 <ul class="left">
                     <li><a href="/dice" id="d20" class="tog">D20</a></li>
-                    <li><a href="#" id="eg" class="tog">Enemy Generator</a></li>
+                    <li><a href="/gen" id="eg" class="tog">Enemy Generator</a></li>
                 </ul>
                 <ul class="right char"> 
                     @if(isset($charsList))

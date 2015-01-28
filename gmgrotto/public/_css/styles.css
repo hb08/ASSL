@@ -110,6 +110,16 @@ footer > p {
 	-o-border-image: url('../_images/frame_thin.png') 20 22 23 18 repeat; 
 	border-image: url('../_images/frame_thin.png') 20 22 23 18 fill repeat;
 }
+/*   Enemy Generator  */
+.panel.ranGen#overlay {
+    height: 200px;
+}
+.panel.ranGen#overlay .content {
+    height: 150px;
+}
+.ranGen label {
+    font-weight: bold;
+}
 /*   Dice Roller  */
 #overlay.dice {
     height: 600px;

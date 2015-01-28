@@ -4,6 +4,14 @@ Route::any('/', array(
 'before'=> 'auth', 'uses' => 'HomeController@display', function(){
 	
     }));
+/*****  RANDOM GENERATOR *****/ 
+Route::get('/gen', array('uses'=>'ShowController@gen', function(){
+    
+    }));
+Route::post('/ran', array('uses'=>'CharController@ran', function(){
+    
+    }));
+
 /*****  DICE ROLLER  *****/ 
 Route::get('/dice', array('uses'=>'ShowController@dice', function(){
     

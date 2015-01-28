@@ -109,6 +109,10 @@
         @include('includes.panel_dice', array('saves' => Session::get('saves'), 'skillSelect' => Session::get('skillSelect'), 'names' => Session::get('names'), 'powers' => Session::get('powersSelect'), 'rolls' => Session::get('rolls') ))
     @endif
     
+    @if(Session::get('gen') == 'open')
+        @include('includes.panel_gen', array('size' => Session::get('size') ))
+    @endif
+    
 </div><!-- End Row -->
 @include('includes.navbar', ['charsList', $charsList])
       

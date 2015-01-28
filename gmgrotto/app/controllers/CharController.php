@@ -1,7 +1,214 @@
 <?php
 
-class CharController extends Controller {        
-    public function editChar($charId){
+class CharController extends Controller {
+    public function ran(){
+        // Get desired power level
+        $pl = Input::get('pl');
+     
+        // PowerPoints Min
+        $min = $pl * 15;
+        // PowerPoints Max
+        $max = (($pl + 1) * 15)-1;
+        // Random from middle
+        $pp = User::rollDice($min, $max);
+      
+echo "POWER POINTS: " . $pp . "<br/>";        
+        // Functions
+            // Check Max Range
+        function checkMax($type, $check, $pl){
+            $max = 0;
+            $m = "";
+echo "TYPE: " . $type . " CHECK: " . $check . " POWER LEVEL: " . $pl . "<br/>";
+            if($type == 'attack' || $type == 'defense' || $type == 'tough'){
+                $max = $pl;
+            }
+            if($type == 'comb/save' || $type == 'skills' || $type == 'abil'){
+                $max = $pl + 5;
+            }
+            if($check <= $max){
+                $m = "Pass";    
+            }else {
+                $m = "Fail";
+            }
+echo "CHECK RESULTS: " . $max . " for ". $m . "<br/>";
+            return $m;  
+        }  
+         
+        // Get breakdown of how points will be spent. 
+        function breakDown($type, $pp, $catList, $pl){
+                // Get initial count from list length
+                $cat = count($catList);
+echo "STARTING BREAKDOWN <br/> CatList: <pre>";
+print_r($catList) ;
+echo "</pre><br/>";                  
+                // Divvy up a percentage to each category initially
+                if($type == 'base'){
+                    $base = ceil($pp/10);
+echo "ABILITY BASE: " . $base . "<br/>";
+                }else{
+                    $base = 0;
+                }                
+                $currentPP = $pp - ($base * $cat);
+                $resultsArray = array();
+echo "Current PP: " . $currentPP . "<br/>";                 
+                // For the remaining 50% of the points, loop once per 10%
+                for($i = 0; $i < $currentPP; $i++ ){
+                    // If it's a combat/save type                       
+                    if($type == 'comb/save'){
+echo "COMB/SAVE " . $i . "<br/>" ;
+                       // Check how many points are left
+                       $enough = $currentPP - $i;
+                       // If there are 2+ points left
+                       if($enough >= 2){
+echo "Double Point Possible because enough is" . $enough . "<br/>"; 
+                           // Roll the full range                    
+                            $roll = User::rollDice(0, ($cat-1));
+                            // If you roll a 0 or 1
+echo "&nbsp; Rolled: " . $roll . "<br/>";
+                            if($roll <2){
+                                // Add an extra point to the i counter
+                                $i += 1;                                
+                            } 
+                        // If there are less than 2 points
+                       }else{
+                           // Only roll for 2+ 
+                           $roll = User::rollDice(2, ($cat-1));
+                       }
+echo "*I now is " . $i . "<br/>";  
+                    // If not combat   
+                    }else{
+                        // Roll full range
+                        $roll = User::rollDice(0, ($cat-1));
+                    }
+                    $result = $catList[$roll];
+echo "&nbsp; &nbsp; Roll " . $i . " for " . $roll . "  " . $result . "<br/>";  
+                    array_push($resultsArray, $result);
+                } 
+                
+                // Array to hold final breakdown
+                $m = array();
+echo "<br/>RESULTS ARRAY<br/>" ;
+echo "<pre>";
+print_r($resultsArray);
+echo "<pre>";    
+                $reRoll = 0;
+                $exceptions = array();           
+                // Cycle through list of categories, assigning points appropriately
+                foreach($catList as $c){
+echo "In CLIST: " . $c . "<br/>";
+                    $basePoints = $base;
+                    $newPoints = 0; 
+                    $mArray = array();                  
+//echo "Base Points: " . $basePoints . "<br/>"; 
+                    // Cycle through results array to give new points. 
+                    foreach($resultsArray as $r){
+//echo "In Results Array: " . $r . "<br/>";
+                        // if result is the same as this category, and new points will not be over the max,
+                        if($r == $c){                            
+                           $newPoints +=1;
+                        }                                                                              
+                    } 
+                    // Get new Total
+                        $newTotal =  $newPoints + $basePoints; 
+                        
+echo "&nbsp; Type: " . $type. "<br/> New Total: " . $newTotal . "<br/>";
+                          if($type == 'abil' || $c == 'defense'){
+                                $fullTotal = 10 + $newTotal;
+                               $m = array_add($m, $c, $fullTotal);
+echo "&nbsp;&nbsp; Adding to M: " . $c . " for ". $fullTotal . "<br/>";    
+                           }elseif($type != 'base' && $newTotal > 0){                              
+echo "&nbsp; NewTotal: " . $newTotal . " > 0<br/>";
+                                // Check to see if this exceeds max                  
+                               if(checkMax($type, $newTotal, $pl) == 'Pass'){
+                                   // If it does, add 10 for ability, add it to the array
+                                   if($type == 'abil'){
+                                        $fullTotal = 10 + $newTotal;
+                                       $m = array_add($m, $c, $fullTotal);
+    echo "&nbsp;&nbsp; Adding to M: " . $c . " for ". $fullTotal . "<br/>";
+                                    // Otherwise times by 4 for skills    
+                                    }elseif($type == 'skills'){
+                                        $total = $newTotal * 4;
+                                        $m = array_add($m, $c, $total);
+                                    // Otherwise add to array as is    
+                                    }else{// If it does, add it to the array
+                                        $m = array_add($m, $c, $newTotal);
+    echo "&nbsp;&nbsp; Adding to M: " . $c . " for ". $newTotal . "<br/>"; 
+                                    }     
+                               }else {
+                               // If not, add to reRoll counter and create exception for this one
+                                    $reRoll +=1;
+                                    array_push($exceptions, $c);       
+                               }
+                       }else{
+                           if($newTotal > 1){  
+                           $m = array_add($m, $c, $newTotal); 
+echo "&nbsp;&nbsp; Adding to M: " . $c . " for ". $newTotal . "<br/>";
+                           }
+                        }                                                                                                
+                }
+echo "<br/>M<br/>" ;
+echo "<pre>";
+print_r($m);
+echo "<pre>";
+                for($i = 0; $i < $reRoll; $i++ ){
+                    $roll = User::rollDice(0,4);
+                    $result = $catList[$roll];
+echo "REROLL:<br/> Result: " . $result . "<br/>";
+
+                    function checkTrue($check, $against){
+                        if($check == $against){
+                            return True;
+                        }else { return False; }                            
+                    }
+                    foreach($exceptions as $e){
+                        if(checkTrue($result, $e)){
+echo "TRUE!";
+                            $i = $i-1;       
+                        }else{
+echo "FALSE!";
+                           array_push($resultsArray, $result);     
+                        }   
+                    } 
+                    
+                }     
+            return $m;
+        }
+        // List of things to go through
+        $breakList = ['abil', 'comb/save', 'skills', 'feats', 'powers'];        
+        // Breakdown overarching pointspread
+        $pointSpread = breakDown('base', $pp, $breakList, $pl);  
+echo "<br/>POINTS SPREAD<br/>";     
+echo "<pre>";
+print_r($pointSpread);
+echo "</pre>"; 
+        // Hold returned details
+        $details = array();
+        // Spend points in pointspread
+        foreach($pointSpread as $key => $value){
+            if($key == 'abil'){
+                $abilList = ['str', 'dex', 'con', 'int', 'wis', 'cha'];    
+                $abilBreakdown = breakDown('abil', $value, $abilList, $pl);
+                $details = array_add($details, 'abil' , $abilBreakdown);
+            }
+            if($key == 'comb/save'){
+                $combList = ['gen_attack', 'defense', 'will', 'fort', 'ref' ];
+                $combBreakdown = breakdown('comb/save',$value, $combList, $pl);
+                $details = array_add($details, 'comb/save', $combBreakdown);
+            }
+            if($key == 'skills'){
+                $skillList = DB::table('skillsList')->lists('skill_name');
+                $skillBreakdown = breakdown('skills', $value, $skillList, $pl);
+                $details = array_add($details, 'skills', $skillBreakdown);
+            }
+        }
+echo "<br/>DETAILS<br/>";     
+echo "<pre>";
+print_r($details);
+echo "</pre>"; 
+    }
+ 
+           
+        function editChar($charId){
         // Gather All inputs into one variable
         $input = Input::all();    
         $uid = Session::get('uid');
@@ -179,10 +386,8 @@ class CharController extends Controller {
            Session::forget('charShow');
            return Redirect::to('/');
     }
-    
-    
-    
-	public function addChar() {
+       
+	    function addChar() {
 	    // Gather all inputs into one variable
         $input = Input::all();
         $uid = Session::get('uid');

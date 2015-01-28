@@ -102,6 +102,8 @@ class HomeController extends BaseController {
         if($what == 'dice'){
             Session::forget('rolls');
             Session::forget('dice');                 
+        }elseif($what == 'gen'){
+            Session::forget('gen');
         }else{
             Session::forget('file'); 
             Session::forget('addChar');
