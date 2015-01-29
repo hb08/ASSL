@@ -11,7 +11,7 @@ class CharController extends Controller {
         $max = (($pl + 1) * 15)-1;
         // Random from middle
         $pp = User::rollDice($min, $max);
-        
+        $miscArray = array();
         // Functions
             // Check Max Range
         function checkMax($type, $check, $pl){
@@ -42,8 +42,7 @@ class CharController extends Controller {
                 // Get initial count from list length
                 $cat = count($catList);
                 // Hold any exceptions to the lists
-                $exceptions = array(); 
-                  
+                $exceptions = array();  
                 // Divvy up a percentage to each category initially
                 if($type == 'base'){
                     $base = ceil($pp/10);
@@ -52,7 +51,7 @@ class CharController extends Controller {
                 }                
                 $currentPP = $pp - ($base * $cat);
                 $resultsArray = array();
- 
+                $misc = array();
                 $result = "";               
                 // Loop to assign any remaining points
                 for($i = 0; $i < $currentPP; $i++ ){
@@ -74,10 +73,9 @@ class CharController extends Controller {
                         } 
                         // If there is not an exception 
                         if($except == 0 && $enough >= $testCost){                           
-                                    $i = $i + $testCost - 1;
-                                $result = $catList[$roll];                                                                        
-                                // if it is a full power buy, don't use it again
-                                if($cost[$roll]->no_rank == 1){
+                                $i = $i + $testCost - 1;
+                                 $result = $catList[$roll];  
+                               if($cost[$roll]->no_rank == 1){
                                     array_push($exceptions, $result);
                                 }                             
                         }else{
@@ -102,11 +100,11 @@ class CharController extends Controller {
                         }
                         // If no exception and it is worth the cost (Exclude sidekick as option due to constraints of making secondary lesser character)
                         if($except == 0 && $enough > 0 && $testResult != 'Sidekick'){
-                            $result = $catList[$roll];
-                            $testMultiple = $times[$roll]->multiple;
+                            $result = $catList[$roll];                     
+                            $testMultiple = $times[$roll]->multiple;                           
                             if($testMultiple == '0'){ // If you can't use it multiple times
                                 array_push($exceptions, $result);  
-                            }            
+                            }          
                         }else{
                             $i = $i-1;
                             $result = "";
@@ -137,11 +135,11 @@ class CharController extends Controller {
                     }                    
 
                     if(!empty($result)){
-                    array_push($resultsArray, $result);                        
+                        array_push($resultsArray, $result);                        
                     } 
 
                 } 
-                
+
                 // Array to hold final breakdown
                 $m = array();  
                 // ReRoll Counter 
@@ -160,18 +158,22 @@ class CharController extends Controller {
                         }                                                                              
                     } 
                     // Get new Total
-                        $newTotal =  $newPoints + $basePoints; 
-                        
-                          if($type == 'abil' || $c == 'defense'){
+                        $newTotal =  $newPoints + $basePoints;                            
+                           if($type=='abil'){
+                               $fullTotal = 10 + $newTotal;
+                                    $modTotal = floor($newTotal/2);
+                                   $m = array_add($m, $c, $fullTotal, $modTotal);
+                           }elseif($c == 'defense'){
                                 $fullTotal = 10 + $newTotal;
-                               $m = array_add($m, $c, $fullTotal);   
+                                $m = array_add($m, $c, $fullTotal);   
                            }elseif($type != 'base' && $newTotal > 0){                              
                                 // Check to see if this exceeds max                  
                                if(checkMax($type, $newTotal, $pl) == 'Pass'){
                                    // If it does, add 10 for ability, add it to the array
                                    if($type == 'abil'){
                                         $fullTotal = 10 + $newTotal;
-                                       $m = array_add($m, $c, $fullTotal);
+                                        $modTotal = floor($newTotal/2);
+                                       $m = array_add($m, $c, $fullTotal, $modTotal);
                                     // Otherwise times by 4 for skills    
                                     }elseif($type == 'skills'){
                                         $total = $newTotal * 4;
@@ -186,7 +188,7 @@ class CharController extends Controller {
                                     array_push($exceptions, $c);       
                                }
                        }else{
-                           if($newTotal > 1){  
+                           if($newTotal > 1){                      
                            $m = array_add($m, $c, $newTotal);                            }
                         }                                                                                                
                 }
@@ -200,11 +202,12 @@ class CharController extends Controller {
                         }else{
                            array_push($resultsArray, $result);     
                         }   
-                    } 
-                    
-                }     
-            return $m;
+                    }                    
+                } 
+         
+                return $m;
         }
+                
         // List of things to go through
         $breakList = ['abil', 'comb/save', 'skills', 'feats', 'powers'];        
         // Breakdown overarching pointspread
@@ -212,7 +215,7 @@ class CharController extends Controller {
         // Hold returned details
         $details = array();
         // Spend points in pointspread
-        foreach($pointSpread as $key => $value){
+        foreach($pointSpread as $key => $value){          
             if($key == 'abil'){
                 $abilList = ['str', 'dex', 'con', 'int', 'wis', 'cha'];    
                 $abilBreakdown = breakDown('abil', $value, $abilList, $pl);
@@ -239,9 +242,43 @@ class CharController extends Controller {
                 $details = array_add($details, 'feats', $featsBreakdown);
             }
         }
-    Session::put('details', $details);
-    Session::put('size', 'full');
-    return Redirect::to('/');
+    $initBonus = 0;
+    $toughBonus = 0;
+    // Count stats that modify others
+    foreach($details as $d){
+        if(isset($d['Improved Initiative'])){
+            $initBonus += (4*$d['Improved Initiative']);    
+        }
+        if(isset($d['Enhanced Dexterity'])){
+            $initBonus += 1;
+        }
+        if(isset($d['Enhanced Constitution']) || isset($d['Defensive Roll'] )){
+            $toughBonus += 1;    
+        }      
+    }
+    // Adjust stats that need it
+    $tough = floor(($details['abil']['con']-10)/2) + $toughBonus;
+    $initiative = floor(($details['abil']['dex']-10)/2) + $initBonus;
+    // Get Basics
+            // Choose Random Height
+        $height = floor(User::rollDice(54,96)/12);
+            // Choose Random Weight
+        $weight = User::rollDice(100,300);   
+            // Choose Random Age
+        $age = User::rollDice(18, 60);
+        $basics = array(
+            'power_level' => $pl,
+            'power_points' => $pp,
+            'height' => $height . " feet",
+            'weight' => $weight . " lbs",
+            'age' => $age,
+            'init' => $initiative,
+            'tough' => $tough
+        );
+        $details = array_add($details, 'basics' , $basics);
+        Session::put('details', $details);
+        Session::put('size', 'full');
+        return Redirect::to('/');
     }
  
            
