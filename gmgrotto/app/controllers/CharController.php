@@ -464,9 +464,7 @@ class CharController extends Controller {
 	    function addChar() {
 	    // Gather all inputs into one variable
         $input = Input::all();
-        $uid = Session::get('uid');
-       
-        
+        $uid = Session::get('uid');        
       // Add To CharList
         DB::table('charList')->insert(
             array('userid' => $uid, 'charName' => $input['altId'])
@@ -560,50 +558,81 @@ class CharController extends Controller {
                 );
             }
     // Add to Skills If They Exist
-       for($i = 1; $i <= 15; $i++){
+$skillsCount= 0;
+foreach($input as $key=>$value){
+    if(preg_match("/\bskill\d+/", $key)){
+        $skillsCount += 1;  
+    }   
+}
+if($skillsCount == 0){
+    $skillsCount = 15;
+}
+
+       for($i = 1; $i <= $skillsCount; $i++){
           $skillNumber = "skill" . $i;
           $skillRank = 'skillRank' . $i;
           $skillAbil = 'skillAbil' . $i;
-          
-          if($input[$skillNumber] != "Skill Name"){
-            $skillId = DB::table('skillsList')->where('skill_name', $input[$skillNumber])->pluck('skill_id'); 
-            DB::table('char_skills')->insert(array(
-                'charId' => $charId,
-                'skill_id' => $skillId,
-                'skill_total' => $input[$skillRank] + $input[$skillAbil],              
-                'skill_ranks' => $input[$skillRank],
-                'skill_abil' =>  $input[$skillAbil]           
-            ));    
+          if($input[$skillNumber] != "Skill Name" || $input[$skillNumber] != "" ){
+            $skillId = DB::table('skillsList')->where('skill_name', $input[$skillNumber])->pluck('skill_id');
+            if(!empty($skillId)){            
+                DB::table('char_skills')->insert(array(
+                    'charId' => $charId,
+                    'skill_id' => $skillId,
+                    'skill_total' => $input[$skillRank] + $input[$skillAbil],              
+                    'skill_ranks' => $input[$skillRank],
+                    'skill_abil' =>  $input[$skillAbil]           
+                ));
+            }    
           } 
        }
-
+$featsCount= 0;
+foreach($input as $key=>$value){
+    if(preg_match("/\bfeat\d+\b/", $key)){
+        $featsCount += 1;   
+    }   
+}
+if($featsCount == 0){
+    $featsCount = 12;
+}
      // Add to Feats If They Exist
-       for($i = 1; $i <= 12; $i++){
+       for($i = 1; $i <= $featsCount; $i++){
           $featNumber = "feat" . $i;
           $featScore = $featNumber . "score";
-          if($input[$featNumber] != "Feat Name"){
+          if($input[$featNumber] != "Feat Name" || $input[$featNumber] != ""){
             $featId = DB::table('featsList')->where('feat_name', $input[$featNumber])->pluck('feat_id'); 
-            DB::table('char_feats')->insert(array(
-                'char_id' => $charId,
-                'feat_id' => $featId,
-                'feat_ranks' => $input[$featScore]               
-            ));    
+            if(!empty($featId)){
+                DB::table('char_feats')->insert(array(
+                    'char_id' => $charId,
+                    'feat_id' => $featId,
+                    'feat_ranks' => $input[$featScore]               
+                ));
+            }    
           } 
        }
-       
+$powersCount= 0;
+foreach($input as $key=>$value){
+    if(preg_match("/\bpower\d+/", $key)){
+        $powersCount += 1;  
+    }   
+}
+if($powersCount == 0){
+    $powersCount = 6;
+}       
      // Add to Powers If They Exist
-       for($i = 1; $i <= 6; $i++){
+       for($i = 1; $i <= $powersCount; $i++){
           $powerNumber = "power" . $i;
           $powerRank = "powerRank" . $i;
           $powerNote = "powerNote" . $i;
-          if($input[$powerNumber] != "Power Name"){
+          if($input[$powerNumber] != "Power Name" || $input[$powerNumber] != ""){
             $powerId = DB::table('powersList')->where('power_name', $input[$powerNumber])->pluck('power_id'); 
-            DB::table('char_powers')->insert(array(
-                'char_id' => $charId,
-                'power_id' => $powerId,
-                'power_ranks' => $input[$powerRank], 
-                'notes' => $input[$powerNote]              
-            ));    
+            if(!empty($powerId)){
+                DB::table('char_powers')->insert(array(
+                    'char_id' => $charId,
+                    'power_id' => $powerId,
+                    'power_ranks' => $input[$powerRank], 
+                    'notes' => $input[$powerNote]              
+                ));
+            }    
           } 
        }
        
@@ -625,7 +654,7 @@ class CharController extends Controller {
                 );    
        }
         Session::forget('addChar');
-      return Redirect::action('HomeController@display');
+    return Redirect::action('HomeController@display');
     }
 
 }

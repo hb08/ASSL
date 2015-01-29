@@ -110,7 +110,7 @@
     @endif
     
     @if(Session::get('gen') == 'open')
-        @include('includes.panel_gen', array('size' => Session::get('size'), 'details' => Session::get('details') ))
+        @include('includes.panel_gen', array('size' => Session::get('size'), 'details' => Session::get('details'), 'skills' => Session::get('skills'), 'feats' => Session::get('feats') ))
     @endif
     
 </div><!-- End Row -->

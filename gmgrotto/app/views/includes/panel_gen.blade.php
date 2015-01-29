@@ -14,10 +14,8 @@
                     </div>
                     {{ Form::submit('Roll Character') }}
                 {{ Form::close() }}
-            @if(isset($details))
-                <p>Details Exist</p>
-                    <pre>{{{print_r($details)}}}</pre>
-                {{ Form::open(array('url'=>'/char', 'method' => 'POST', 'id'=>'newChar', 'class'=>'columns medium-12 large-12')) }}
+            @if(isset($details))                    
+                {{ Form::open(array('url'=>'/char', 'method' => 'POST', 'id'=>'newChar', 'class'=>'ranChar columns medium-12 large-12')) }}
                 <!-- Basic Information -->
                      <div class="row" >
                         <h2 class="text-center">Basic Information</h2>
@@ -266,7 +264,204 @@
                             </div>                     
                     </div>    
                 </div>    
-                                                      
+                <!-- Skills --> 
+                 <div class="row">
+                    <h2 class="text-center">Skills</h2>
+                     <?php $count = 1; ?>        
+                    <div class="row">
+                        @foreach($details['skills'] as $key=>$value)
+                            @if($count%3 == 1) 
+                                </div>
+                                <div class="row">
+                            @endif  
+                            <div class="small-12 large-4 columns">
+                                <select name="{{{'skill'. $count }}}" class="columns large-6 small-6">
+                                    @foreach($skills as $skill)
+                                        @if( $skill->skill_name == $key)
+                                            <option selected>{{{ $skill->skill_name }}}</option>
+                                        @else
+                                            <option>{{{ $skill->skill_name }}}</option>
+                                        @endif                           
+                                    @endforeach 
+                                </select>
+                                 <div class="columns large-3 small-3" >
+                                    <input type="number" id="{{{'skillRank' . $count }}}" name="{{{'skillRank' . $count }}}" placeholder = "Rank" value="{{{$value}}}">                         
+                                </div> 
+                                <div class="columns large-3 small-3" >
+                                     <input type="number" id="{{{'skillAbil' . $count }}}" name="{{{'skillAbil' . $count }}}" placeholder = "Abil" @foreach($skills as $skill)  @if( $skill->skill_name == $key && $key != 'Language' ) value="{{{ floor(($details['abil'][$skill->skill_mod]-10)/2) }}}"  @endif @endforeach  >                    
+                                </div>
+                        </div>
+                 <?php $count += 1; ?>
+                 @endforeach
+                 <?php
+                 if($count > 15){
+                    $rem = $count%3;
+                    $total = $count + (3 - $rem);
+                 }else{
+                    $total = 15;
+                 }
+                 ?>
+                   @for($i = $count; $i <= $total; $i++ ) 
+                        @if($count%3 == 1) 
+                        </div>
+                        <div class="row">
+                        @endif                      
+                    <div class="small-12 large-4 columns">
+                        <select name="{{{'skill'. $count }}}" class="columns large-6 small-6">
+                            <option></option>
+                            @foreach($skills as $skill)       
+                                <option>{{{ $skill->skill_name }}}</option>                           
+                            @endforeach 
+                        </select> 
+                            <div class="columns large-3 small-3" >
+                                <input type="number" id="{{{'skillRank' . $count }}}" name="{{{'skillRank' . $count }}}" placeholder = "Rank">                         
+                            </div>
+                            <div class="columns large-3 small-3" >
+                                 <input type="number" id="{{{'skillAbil' . $count }}}" name="{{{'skillAbil' . $count }}}" placeholder = "Abil" >                    
+                            </div>
+                    </div>
+                    <?php $count += 1; ?>
+                    @endfor                  
+                    </div>   
+                 </div>
+                 <!-- Feats --> 
+                 <div class="row">
+                    <h2 class="text-center">Feats</h2>
+                    <?php $count = 1; ?>  
+                    <div class="row">
+                        @foreach($details['feats'] as $key=>$value) 
+                            @if($count%4 == 1 && $count > 1) 
+                                </div>
+                                <div class="row">
+                            @endif                      
+                        <div class="small-12 large-3 columns">  
+                            <select name="{{{ 'feat' . $count }}}" class="columns large-8 small-8">
+                                @foreach($feats as $feat)
+                                    @if( $feat->feat_name == $key)
+                                        <option selected>{{{ $feat->feat_name }}}</option>
+                                    @endif
+                                    <option>{{{ $feat->feat_name }}}</option>
+                                @endforeach 
+                            </select> 
+                                <div class="columns large-4 small-4" >
+                                    <input type="number" id="{{{ 'feat' . $count . 'score'}}}" name="{{{ 'feat' . $count . 'score'}}}" placeholder  = "" value="{{{ $value }}}">                         
+                                </div>
+                        </div>
+                        <?php $count += 1; ?>  
+                         @endforeach
+                        <?php
+                             if($count > 12){
+                                $rem = $count%4;
+                                $total = $count + (4 - $rem);
+                             }else{
+                                $total = 12;
+                             }
+                        ?>
+                         @for($i = $count; $i <= $total; $i ++) 
+                            @if($count%4 == 1 && $count > 1) 
+                                </div>
+                                <div class="row">
+                            @endif                      
+                            <div class="small-12 large-3 columns">  
+                                <select name="{{{ 'feat' . $i }}}" class="columns large-8 small-8">
+                                    <option></option>
+                                    @foreach($feats as $feat)
+                                        <option>{{{ $feat->feat_name }}}</option>
+                                    @endforeach 
+                                </select> 
+                                    <div class="columns large-4 small-4" >
+                                        <input type="number" id="{{{ 'feat' . $i . 'score'}}}" name="{{{ 'feat' . $i . 'score'}}}" placeholder  = "">                         
+                                    </div>
+                            </div>
+                           <?php $count += 1; ?>  
+                         @endfor       
+                    </div>                        
+                 </div> 
+                 <!-- Powers --> 
+                 <div class="row">
+                    <h2 class="text-center">Powers</h2>
+                    <?php $count = 1; ?>  
+                    <div class="row">
+                     @foreach($details['powers'] as $key=>$value)
+                            @if($count%2 == 1 && $count > 1) 
+                                </div>
+                                <div class="row">
+                            @endif                   
+                        <div class="small-12 large-6 columns">  
+                            <select name="{{{ 'power' . $count }}}" class="columns large-4 small-4">
+                                @foreach(Session::get('powers') as $power)
+                                    @if( $power->power_name == $key)
+                                        <option selected>{{{ $power->power_name }}}</option>
+                                    @endif
+                                    <option>{{{ $power->power_name }}}</option>
+                                @endforeach 
+                            </select> 
+                                <div class="columns large-3 small-2" >
+                                    <input type="number" id="{{{ 'powerRank'  . $count }}}" name="{{{ 'powerRank'  . $count }}}" placeholder = "Rank" @foreach(Session::get('powers') as $p) @if($p->power_name == $key) value="{{{ $value }}}" @endif @endforeach>                         
+                                </div>
+                                <div class="columns large-5 small-6" >
+                                     <input type="text" id="{{{ 'powerNote'  . $count }}}" name="{{{ 'powerNote'  . $count }}}" placeholder = "Notes" >                    
+                                </div>
+                        </div>
+                           <?php $count += 1; ?>                                
+                     @endforeach
+                     <?php 
+                        if($count > 6){
+                            $rem = $count%2;
+                            $total = $count - $rem;
+                         }else{
+                            $total = 6;
+                         }
+                     ?>
+                     @for($i = $count; $i <= $total ; $i++)
+                            @if($i%2 == 1 && $i > 1) 
+                                </div>
+                                <div class="row">
+                            @endif                   
+                        <div class="small-12 large-6 columns">  
+                            <select name="{{{ 'power' . $count }}}" class="columns large-4 small-4">
+                                <option></option>
+                                @foreach(Session::get('powers') as $power)
+                                    <option>{{{ $power->power_name }}}</option>
+                                @endforeach 
+                            </select> 
+                                <div class="columns large-3 small-2" >
+                                    <input type="number" id="{{{ 'powerRank'  . $count }}}" name="{{{ 'powerRank'  . $count }}}" placeholder = "Rank">                         
+                                </div>
+                                <div class="columns large-5 small-6" >
+                                     <input type="text" id="{{{ 'powerNote'  . $count }}}" name="{{{ 'powerNote'  . $count }}}" placeholder = "Notes">                    
+                                </div>
+                        </div>
+                           <?php $count += 1; ?>                                
+                     @endfor
+                    </div> 
+                </div>
+                 <!-- Drawbacks --> 
+               <div class="row" >
+                   <h2 class="text-center">Drawbacks</h2>
+                   <div class="small-12 large-6 columns">  
+                        <div class="columns large-2 small-3" >
+                            <label for="db1" class=" inline">Description</label>    
+                        </div>
+                        <div class="columns large-8 small-6" >
+                            <input type="text" id="db1" name="db1" placeholder = "Description">                         
+                        </div>
+                        <div class="columns large-2 small-3" >
+                             <input type="number" id="db1cost" name="db1cost" placeholder = "Cost">                    
+                        </div>
+                    </div> 
+                    <div class="small-12 large-6 columns"> 
+                        <div class="columns large-2 small-3" >
+                            <label for="db2" class=" inline">Description</label>    
+                        </div>
+                        <div class="columns large-8 small-6" >
+                            <input type="text" id="db2" name="db2" placeholder = "Description">                         
+                        </div>
+                        <div class="columns large-2 small-3" >
+                             <input type="number" id="db2cost" name="db2cost" placeholder = "Cost">                    
+                        </div>
+                    </div>
+               </div>                                        
                 <!-- Submit --> 
                     {{ Form::submit('Add Character!', array('class'=>'large-3 medium-3 columns medium-offset-5 large-offset-5')) }}
                 {{ Form::close() }} 

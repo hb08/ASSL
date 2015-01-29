@@ -120,6 +120,9 @@ footer > p {
 .ranGen label {
     font-weight: bold;
 }
+#newChar.ranChar select {
+    padding: .7em;
+}
 /*   Dice Roller  */
 #overlay.dice {
     height: 600px;
