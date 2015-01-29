@@ -101,7 +101,7 @@ class HomeController extends BaseController {
     public function exitForget($what){
         if($what == 'dice'){
             Session::forget('rolls');
-            Session::forget('dice');                 
+            Session::forget('dice');                         
         }elseif($what == 'gen'){
             Session::forget('gen');
             Session::forget('details');

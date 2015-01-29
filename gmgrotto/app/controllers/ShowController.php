@@ -151,7 +151,8 @@ class ShowController extends BaseController {
                     ORDER BY charName;", array($uid));
         
         Session::put('powersSelect', $powersSelect);
-        Session::put('dice', 'show') ;  
+        Session::put('dice', 'show') ;
+        
         return Redirect::action('HomeController@display');    
     }    
     

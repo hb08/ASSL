@@ -365,6 +365,9 @@ nav {
 nav ul {
 	border-bottom: 3px solid rgb(0, 0, 0);
 }
+nav .top-bar-section > ul > li.openPanel {
+    background: #FFBD72;
+}
 .top-bar-section li:not(.has-form) a:hover:not(.button) {
 	background: #1AA0C5;
 }

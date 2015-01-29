@@ -654,6 +654,8 @@ if($powersCount == 0){
                 );    
        }
         Session::forget('addChar');
+        Session::forget('details');
+        Session::forget('gen');
     return Redirect::action('HomeController@display');
     }
 

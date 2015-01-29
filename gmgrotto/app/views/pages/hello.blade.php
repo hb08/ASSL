@@ -114,6 +114,6 @@
     @endif
     
 </div><!-- End Row -->
-@include('includes.navbar', ['charsList', $charsList])
+@include('includes.navbar', array('charsList' => $charsList, 'dice' => Session::get('dice'), 'charShow' => Session::get('charShow'), 'addShow' => Session::get('addChar'), 'genShow' => Session::get('gen')  ))
       
 @stop
