@@ -16,19 +16,19 @@
                             <label for="name" class="inline">Name:</label>    
                         </div>
                         <div class="columns large-2" >
-                            <input type="text" id="realName" name="realName" placeholder = "Real Name">                         
+                            <input type="text" id="realName" name="realName" placeholder = "Real Name" required>                         
                         </div>
                         <div class="columns large-1" >
                             <label for="alt" class=" inline">Alias:</label>   
                         </div>
                         <div class="columns large-2" >
-                             <input type="text" id="altId"  name="altId" placeholder = "Alternate Identity">                    
+                             <input type="text" id="altId"  name="altId" placeholder = "Alternate Identity" required>                    
                         </div>
                         <div class="columns large-1" >
                             <label for="affi" class=" inline">Affiliation:</label>    
                         </div>
                         <div class="columns large-2" >
-                            <input type="text" id="affi" name="affi" placeholder = "Affiliation">                 
+                            <input type="text" id="affi" name="affi" placeholder = "Affiliation" required>                 
                         </div>
                         <div class="columns large-2 vert" >
                                 <input type="radio" name="ff" value="0" id="friend" checked="checked"><label for="friend">Friend</label>
@@ -40,13 +40,13 @@
                             <label for="pl" class=" inline">Power Level:</label>    
                         </div>
                         <div class="columns large-1 small-2" >
-                            <input type="number" id="pl" name="pl">                         
+                            <input type="number" id="pl" name="pl" required>                         
                         </div>
                         <div class="columns large-2 small-4" >
                             <label for="pps" class=" inline">Power Points:</label>   
                         </div>
                         <div class="columns large-1 small-2" >
-                             <input type="number" id="pps" name="pps" >                    
+                             <input type="number" id="pps" name="pps"  required>                    
                         </div>
                         <div class="columns large-2 small-4" >
                             <label class=" inline">Hero Points:</label>    
@@ -88,10 +88,10 @@
                                 <label class=" inline">Strength:</label>    
                             </div>
                                 <div class="columns large-4 small-4" >
-                                    <input type="number" id="strRank" name="strRank" placeholder = "Rank">                         
+                                    <input type="number" id="strRank" name="strRank" placeholder = "Rank" required>                         
                                 </div>
                                 <div class="columns large-4 small-4" >
-                                     <input type="number" id="strMod" name="strMod" placeholder = "Mod">                    
+                                     <input type="number" id="strMod" name="strMod" placeholder = "Mod" required>                    
                                 </div>
                         </div>
                         <div class="columns large-4">
@@ -99,10 +99,10 @@
                                 <label class=" inline">Dexterity:</label>    
                             </div>
                                 <div class="columns large-4 small-4" >
-                                    <input type="number" id="dexRank" name="dexRank" placeholder = "Rank">                         
+                                    <input type="number" id="dexRank" name="dexRank" placeholder = "Rank" required>                         
                                 </div>
                                 <div class="columns large-4 small-4" >
-                                     <input type="number" id="dexMod" name="dexMod" placeholder = "Mod">                    
+                                     <input type="number" id="dexMod" name="dexMod" placeholder = "Mod" required>                    
                                 </div>
                         </div>
                         <div class="columns large-4">
@@ -110,10 +110,10 @@
                                 <label class=" inline">Constitution:</label>    
                             </div>
                                 <div class="columns large-4 small-4" >
-                                    <input type="number" id="conRank" name="conRank" placeholder = "Rank">                         
+                                    <input type="number" id="conRank" name="conRank" placeholder = "Rank" required>                         
                                 </div>
                                 <div class="columns large-4 small-4" >
-                                     <input type="number" id="conMod" name="conMod" placeholder = "Mod">                    
+                                     <input type="number" id="conMod" name="conMod" placeholder = "Mod" required>                    
                                 </div>
                         </div>
                      </div>
@@ -123,10 +123,10 @@
                                 <label class=" inline">Intelligence:</label>    
                             </div>
                                 <div class="columns large-4 small-4" >
-                                    <input type="number" id="intRank" name="intRank" placeholder = "Rank">                         
+                                    <input type="number" id="intRank" name="intRank" placeholder = "Rank" required>                         
                                 </div>
                                 <div class="columns large-4 small-4" >
-                                     <input type="number" id="intMod" name="intMod" placeholder = "Mod">                    
+                                     <input type="number" id="intMod" name="intMod" placeholder = "Mod" required>                    
                                 </div>
                         </div>
                         <div class="columns large-4">
@@ -134,10 +134,10 @@
                                 <label class=" inline">Wisdom:</label>    
                             </div>
                                 <div class="columns large-4 small-4" >
-                                    <input type="number" id="wisRank" name="wisRank" placeholder = "Rank">                         
+                                    <input type="number" id="wisRank" name="wisRank" placeholder = "Rank" required>                         
                                 </div>
                                 <div class="columns large-4 small-4" >
-                                     <input type="number" id="wisMod" name="wisMod" placeholder = "Mod">                    
+                                     <input type="number" id="wisMod" name="wisMod" placeholder = "Mod" required>                    
                                 </div>
                         </div>
                         <div class="columns large-4">
@@ -145,10 +145,10 @@
                                 <label class=" inline">Charisma:</label>    
                             </div>
                                 <div class="columns large-4 small-4" >
-                                    <input type="number" id="chaRank" name="chaRank" placeholder = "Rank">                         
+                                    <input type="number" id="chaRank" name="chaRank" placeholder = "Rank" required>                         
                                 </div>
                                 <div class="columns large-4 small-4" >
-                                     <input type="number" id="chaMod" name="chaMod" placeholder = "Mod">                    
+                                     <input type="number" id="chaMod" name="chaMod" placeholder = "Mod" required>                    
                                 </div>
                         </div>
                      </div>
@@ -162,21 +162,21 @@
                                 <label for="initiative" class=" inline">Initiative:</label>    
                             </div>
                             <div class="columns   large-2  small-2" >
-                                <input type="number" id="initiative" name="initiative" placeholder = "">                         
+                                <input type="number" id="initiative" name="initiative" placeholder = "" required>                         
                             </div>
                                                        
                             <div class="columns   large-2  small-2" >
                                 <label for="attack" class=" inline">Attack:</label>    
                             </div>
                             <div class="columns  large-2  small-2">
-                                <input type="number" id="attack" name="attack" placeholder = "">                         
+                                <input type="number" id="attack" name="attack" placeholder = "" required>                         
                             </div>                                                                      
                                                           
                             <div class="columns   large-2  small-2" >
                                 <label for="knockback" class=" inline">Knockback:</label>    
                             </div>
                             <div class="columns   large-2  small-2" >
-                                <input type="number" id="knockback" name="knockback" placeholder = "">                         
+                                <input type="number" id="knockback" name="knockback" placeholder = "" required>                         
                             </div>
                         </div>
                         <div class="columns small-12 large-6">
@@ -184,21 +184,21 @@
                                 <label class=" inline">Defense:</label>    
                             </div>
                             <div class="columns  large-2  small-2" >
-                                 <input type="number" id="defense" name="defense" placeholder = "">                    
+                                 <input type="number" id="defense" name="defense" placeholder = "" required>                    
                             </div>
                             
                             <div class="columns  large-2  small-2" >
                                 <label class=" inline">Toughness:</label>    
                             </div>
                             <div class="columns  large-2  small-2" >
-                                 <input type="number" id="toughMod" name="toughMod" placeholder = "">                    
+                                 <input type="number" id="toughMod" name="toughMod" placeholder = "" required>                    
                             </div> 
                             
                             <div class="columns  large-2  small-2" >
                                 <label for="grapple" class=" inline">Grapple:</label>    
                             </div>
                             <div class="columns  large-2  small-2" >
-                                <input type="number" id="grapple" name="grapple" placeholder = "">                         
+                                <input type="number" id="grapple" name="grapple" placeholder = "" required>                         
                             </div>                                                                                        
                         </div>
                     </div>
@@ -242,19 +242,19 @@
                             <label class=" inline">Fortitude:</label>    
                         </div>
                         <div class="columns large-2  small-2" >
-                            <input type="number" id="fort" name="fort" placeholder = "">                         
+                            <input type="number" id="fort" name="fort" placeholder = "" required>                         
                         </div>      
                         <div class="columns large-2  small-2" >
                             <label class=" inline">Reflex:</label>    
                         </div>
                             <div class="columns large-2  small-2" >
-                                <input type="number" id="reflex" name="reflex" placeholder = "">                         
+                                <input type="number" id="reflex" name="reflex" placeholder = "" required>                         
                             </div>        
                         <div class="columns large-2 small-2" >
                             <label class=" inline">Will:</label>    
                         </div>
                             <div class="columns  large-2  small-2" >
-                                <input type="number" id="will" name="will" placeholder = "">                         
+                                <input type="number" id="will" name="will" placeholder = "" required>                         
                             </div>                     
                     </div>    
                 </div>
@@ -263,17 +263,17 @@
                     <h2 class="text-center">Skills</h2>
                     <div class="row">
                         <div class="small-12 large-4 columns">
-                            <select name="skill1" class="columns large-6 small-6">
+                            <select name="skill1" class="columns large-6 small-6" required>
                                 <option>Skill Name</option>
                                 @foreach(Session::get('skills') as $skill)
                                     <option>{{{ $skill->skill_name }}}</option>
                                 @endforeach 
                             </select> 
                                 <div class="columns large-3 small-3" >
-                                    <input type="number" id="skillRank1" name="skillRank1" placeholder = "Rank">                         
+                                    <input type="number" id="skillRank1" name="skillRank1" placeholder = "Rank" required>                         
                                 </div>
                                 <div class="columns large-3 small-3" >
-                                     <input type="number" id="skillAbil1" name="skillAbil1" placeholder = "Abil">                    
+                                     <input type="number" id="skillAbil1" name="skillAbil1" placeholder = "Abil" required>                    
                                 </div>
                         </div> 
                         <div class="small-12 large-4 columns">
@@ -487,14 +487,14 @@
                     <h2 class="text-center">Feats</h2>
                     <div class="row">
                         <div class="small-12 large-3 columns">  
-                            <select name="feat1" class="columns large-8 small-8">
+                            <select name="feat1" class="columns large-8 small-8" required>
                                 <option>Feat Name</option>
                                 @foreach(Session::get('feats') as $feat)
                                     <option>{{{ $feat->feat_name }}}</option>
                                 @endforeach 
                             </select> 
                                 <div class="columns large-4 small-4" >
-                                    <input type="number" id="feat1score" name="feat1score" placeholder  = "">                         
+                                    <input type="number" id="feat1score" name="feat1score" placeholder  = "" required>                         
                                 </div>
                        </div> 
                        <div class="small-12 large-3 columns">   
@@ -639,14 +639,14 @@
                     <h2 class="text-center">Powers</h2> 
                     <div class="row">
                         <div class="small-12 large-6 columns"> 
-                            <select name="power1" class="columns large-4 small-4">
+                            <select name="power1" class="columns large-4 small-4" required>
                                 <option>Power Name</option>
                                 @foreach(Session::get('powers') as $power)
                                     <option>{{{ $power->power_name }}}</option>
                                 @endforeach 
                             </select> 
                                 <div class="columns large-3 small-2" >
-                                    <input type="number" id="powerRank1" name="powerRank1" placeholder = "Rank">                         
+                                    <input type="number" id="powerRank1" name="powerRank1" placeholder = "Rank" required>                         
                                 </div>
                                 <div class="columns large-5 small-6" >
                                      <input type="text" id="powerNote1" name="powerNote1" placeholder = "Notes">                    

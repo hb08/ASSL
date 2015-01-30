@@ -3,11 +3,11 @@ class Chars extends Eloquent {
     protected $table = 'charList';
       
     static public function getAttacks($uid){
-        $start = DB::select('SELECT * FROM charList INNER JOIN char_comb ON charList.charId=char_comb.charId WHERE userId = ?', array($uid));
+        $start = DB::select('SELECT * FROM charList INNER JOIN char_comb ON charList.charId=char_comb.charId WHERE userId = ? ORDER BY charName', array($uid));
         
         foreach($start as $char){
             // Get Their Attacks
-            $attacks = DB::select('SELECT attack_name, attack_score FROM char_attacks WHERE charId = ?', array($char->charId));
+            $attacks = DB::select('SELECT attack_name, attack_score FROM char_attacks WHERE charId = ? ', array($char->charId));
          
             // Push attacks to char array
             $char->attacks = $attacks;  
@@ -22,12 +22,12 @@ class Chars extends Eloquent {
              
     static public function fight(){
         $uid = Session::get('uid');
-        $charList = DB::select('SELECT charList.charId, userId, charName, defense, gen_attack, melee, ranged, tough, attack_name, attack_score FROM charList INNER JOIN char_comb ON charList.charId=char_comb.charId INNER JOIN char_attacks ON charList.charId=char_attacks.charId WHERE userId = ?', array($uid));
+        $charList = DB::select('SELECT charList.charId, userId, charName, defense, gen_attack, melee, ranged, tough, attack_name, attack_score FROM charList LEFT OUTER JOIN char_comb ON charList.charId=char_comb.charId LEFT OUTER JOIN char_attacks ON charList.charId=char_attacks.charId WHERE userId = ?', array($uid));
         $list = DB::select('SELECT charName FROM charList WHERE userId = ?', array($uid));
-        
-        function getInputs($input, $charList){
+
+        function getInputs($input, $list){
             $inputValues = "";
-            foreach($charList as $char){
+            foreach($list as $char){
                 $inputName = $char->charId . "_" . $input;
                 $result = Input::get($inputName);
                 $inputValues = array_add($inputValues, $char->charName, $result);
@@ -35,26 +35,36 @@ class Chars extends Eloquent {
             return $inputValues;             
         }
         
-        function getAttackScores($attackNames, $charList){
+        function getAttackScores($enemyNames, $attackNames, $charList){
             $start = "";
             foreach($charList as $char){
                 $charId = $char->charId;
                 $charName = $char->charName;
-                $attackName = $attackNames[$charName];
-                $results = ""; 
-                if($attackName == 'melee'){
-                    $results = DB::table('char_comb')->where('charId', $charId)->pluck('melee');    
-                }elseif($attackName == 'ranged'){
-                    $results = DB::table('char_comb')->where('charId', $charId)->pluck('ranged');    
-                }elseif($attackName == 'gen_attack'){
-                    $results = DB::table('char_comb')->where('charId', $charId)->pluck('gen_attack');    
-                }else{
-                    $score = DB::select('SELECT attack_score FROM char_attacks WHERE charId = ? AND attack_name = ?', array($charId, $attackName));
-                    foreach($score as $s){
-                        $results = $s->attack_score;    
-                    }
-                }                
-                $start = array_add($start, $charName, $results);                                                          
+                foreach($enemyNames as $key => $value){
+                    if($key == $charName && !empty($value)){
+                        $attackName = $attackNames[$charName];
+                        $results = ""; 
+                        if($attackName == 'melee'){
+                            $results = DB::table('char_comb')->where('charId', $charId)->pluck('melee');
+                            if(!empty($results)){
+                                $results = DB::table('char_comb')->where('charId', $charId)->pluck('gen_attack');
+                            }     
+                        }elseif($attackName == 'ranged'){
+                            $results = DB::table('char_comb')->where('charId', $charId)->pluck('ranged'); 
+                            if(!empty($results)){
+                                $results = DB::table('char_comb')->where('charId', $charId)->pluck('gen_attack');
+                            }   
+                        }elseif($attackName == 'gen_attack'){
+                            $results = DB::table('char_comb')->where('charId', $charId)->pluck('gen_attack');    
+                        }else{
+                            $score = DB::select('SELECT attack_score FROM char_attacks WHERE charId = ? AND attack_name = ?', array($charId, $attackName));
+                            foreach($score as $s){
+                                $results = $s->attack_score;    
+                            }
+                        }                
+                        $start = array_add($start, $charName, $results);          
+                    }             
+                }
             }
             return $start;      
         }
@@ -62,7 +72,7 @@ class Chars extends Eloquent {
         // Input Variables
         $attackNames = getInputs('attackName', $charList);
         $enemyNames = getInputs('enemyName', $charList);
-        $attackScores = getAttackScores($attackNames, $charList);
+        $attackScores = getAttackScores($enemyNames, $attackNames, $charList);
         $defenseScores = getInputs('defenseScore', $charList);
         $toughnessScores = getInputs('toughSave', $charList);
         
@@ -74,8 +84,8 @@ class Chars extends Eloquent {
             $attack = $as;
             $defense = $ds;
             $start = array();
-            foreach($list as $char){
-                $charName = $char->charName;
+            foreach($attack as $key=>$value){             
+                $charName = $key;
                 $roll = User::rollDice(1,20);
                 // If they roll a 1 on attack, critical failure
                     if($roll == 1){
@@ -85,7 +95,7 @@ class Chars extends Eloquent {
                         $result = array('res' => 'succeeds!', 'roll' => $roll);
                     }else{                            
                         // Check Results otherwise
-                        $resultScore = ($attack[$charName] + $roll) - $defense[$charName];                    
+                        $resultScore = ($value + $roll) - $defense[$charName];                    
                         // Result Arrays
                         if($resultScore >= 0 ){// Array for Successful attack
                             $result = array('res' => 'succeeds!', 'roll' => $roll);
@@ -133,32 +143,34 @@ class Chars extends Eloquent {
         } 
        
         // Calculate Attack
-        $attackResults = attackResults($attackScores, $defenseScores, $uid, $list);        
-
-        
-        $mess = "<p class='bold text-center'>Round</p>";         
-        
-        foreach($list as $char){                                
-            $charName = $char->charName;
-            $arCall = $attackResults[$charName];
-            if($attackNames[$charName] == "gen_attack"){
-                $attackNames[$charName] = "a general attack" ;   
-            }
-            $mess .= "<p>". $charName . " used " . $attackNames[$charName] .  " against " . $enemyNames[$charName] . " and " . $arCall['res'];  
-            $mess .= "<span> Attack: {$attackScores[$charName]}  Attack Roll: {$arCall['roll']} |  VS  | Defense Results: {$defenseScores[$charName]}</span></p>"; 
-            if($arCall['res'] == 'succeeds!'){
-                $calcDamage = calcDamage($attackScores[$charName], $toughnessScores[$charName], $arCall['roll']); 
-                $mess .= "<p class='indent'>". $enemyNames[$charName] . " is " . $calcDamage['res'];
-                $mess .= "<span>Attack Damage: {$calcDamage['ad']}  |   VS | Enemy Toughness: {$toughnessScores[$charName]} Defense Roll: {$calcDamage['dRoll']}<span></p><hr/>";                       
-            }
+        $attackResults = attackResults($attackScores, $defenseScores, $uid, $list);                
+        $mess = "<p class='bold text-center'>Round</p>";      
+        foreach($attackResults as $key=>$value){
+            foreach($enemyNames as $eKey=>$eValue){
+                if(!empty($eValue) && $key == $eKey){
+                 $charName = $key;
+                    if($attackNames[$charName] == "gen_attack"){
+                        $attackNames[$charName] = "a general attack" ;   
+                    }
+                    $mess .= "<p>". $charName . " used " . $attackNames[$charName] .  " against " . $eValue . " and " . $value['res'];  
+                    $mess .= "<span> Attack: {$eValue}  Attack Roll: {$value['roll']} |  VS  | Defense Results: {$defenseScores[$charName]}</span></p>"; 
+                    if($value['res'] == 'succeeds!'){
+                        $calcDamage = calcDamage($attackScores[$charName], $toughnessScores[$charName], $value['roll']); 
+                        $mess .= "<p class='indent'>". $eValue . " is " . $calcDamage['res'];
+                        $mess .= "<span>Attack Damage: {$calcDamage['ad']}  |   VS | Enemy Toughness: {$toughnessScores[$charName]} Defense Roll: {$calcDamage['dRoll']}<span></p><hr/>";                       
+                    } 
+                    if($value['res'] == 'fails.'){
+                        $mess .= "<hr/>";
+                    }  
+                }
+            }                                      
         } 
         if(!empty(Session::get('combRes'))){
             $oldMess = Session::get('combRes');
             $mess .= $oldMess;
-        } 
-       
+        }          
         // Save complete message to session
-        return  $mess; 
+       return  $mess; 
     }
 }  
 

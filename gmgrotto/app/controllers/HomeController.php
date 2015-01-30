@@ -78,11 +78,11 @@ class HomeController extends BaseController {
         $currentNotes = DB::table('scratchpad')->where('userId', $uid)->pluck('notes');
         
         // Set Select Lists for Char Form
-        $feats = DB::table('featsList')->get();
+        $feats = DB::table('featsList')->orderBy('feat_name')->get();
         Session::put('feats', $feats);
-        $powers = DB::table('powersList')->get();
+        $powers = DB::table('powersList')->orderBy('power_name')->get();
         Session::put('powers', $powers);
-        $skills = DB::table('skillsList')->get();
+        $skills = DB::table('skillsList')->orderBy('skill_name')->get();
         Session::put('skills', $skills);
         
         $fi = Session::get('file');

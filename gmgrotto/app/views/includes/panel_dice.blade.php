@@ -36,7 +36,7 @@
                              @endforeach
                              </select>  
                             <h2 class="small-1 columns">+</h2>                  
-                            <input type="number" class="columns small-3 dice" name="saveMod_{{{$n}}}" placeholder="Mod"/>                                                                      
+                            <input type="number" class="columns small-3 dice" name="save_mod_{{{$n}}}" placeholder="Mod"/>                                                                      
                     @endforeach                   
                 @endif
                 </div>
@@ -54,7 +54,7 @@
                                 @endforeach
                             </select>
                            <h2 class="small-1 columns">+</h2>                  
-                           <input type="number" class="columns small-3 dice" name="saveMod_{{{$n}}}" placeholder="Mod"/>                         
+                           <input type="number" class="columns small-3 dice" name="skill_mod_{{{$n}}}" placeholder="Mod"/>                         
                     @endforeach  
                 @endif
                 </div>
@@ -72,7 +72,7 @@
                             @endforeach
                             </select>
                         <h2 class="small-1 columns">+</h2>                  
-                        <input type="number" class="columns small-3 dice" name="powerMod_{{{$n}}}" placeholder="Mod"/>                    
+                        <input type="number" class="columns small-3 dice" name="power_mod_{{{$n}}}" placeholder="Mod"/>                    
                     @endforeach
                 </div>
                 @endif

@@ -6,6 +6,7 @@ class ShowController extends BaseController {
         Session::put('size', '');
         return Redirect::action('HomeController@display');
     }
+   
     public function roll(){
         $inputs = Input::all();
         $names = Session::get('names');
@@ -21,9 +22,9 @@ class ShowController extends BaseController {
                 $m = 0;
                 // Array of input starters
                 $start = array(
-                    'saves' => ['save_', 'saveMod_'],
-                    'skills' => ['skill_', 'skillMod_'],
-                    'power' => ['power_', 'powerMod_'],
+                    'saves' => ['save_', 'save_mod_'],
+                    'skills' => ['skill_', 'skill_mod_'],
+                    'power' => ['power_', 'power_mod_'],
                     'misc' => ['misc', 'misc_score', 'misc_mod']
                 );
                 foreach($start as $s){                 
@@ -54,7 +55,7 @@ class ShowController extends BaseController {
                         }else{
                             $t = "<span class='hBlue'>" . $t;
                         } 
-                                          
+   
                         // If there is a modifier
                         if(!empty($inputs[$s[1] . $n])){
                             // Assign it to a variable
@@ -140,7 +141,7 @@ class ShowController extends BaseController {
                     INNER JOIN char_skills ON charList.charId=char_skills.charId
                     JOIN skillsList ON char_skills.skill_id=skillsList.skill_id
                     WHERE charList.userId = ?
-                    ORDER BY charName;",array($uid));
+                    ORDER BY charName, skill_name;",array($uid));
         Session::put('skillSelect', $skills);
         $names = DB::table('charList')->where('userId', $uid)->lists('charName');
         Session::put('names', $names);
@@ -148,7 +149,7 @@ class ShowController extends BaseController {
                     INNER JOIN char_powers ON charList.charId=char_powers.char_id
                     JOIN powersList ON char_powers.power_id=powersList.power_id
                     WHERE charList.userId = ?
-                    ORDER BY charName;", array($uid));
+                    ORDER BY charName, power_name;", array($uid));
         
         Session::put('powersSelect', $powersSelect);
         Session::put('dice', 'show') ;

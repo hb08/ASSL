@@ -75,7 +75,7 @@
                                 </div>                                                               
                              </div>   
                             @endforeach    
-                        @endif                          
+                        @endif  
                             {{ Form::submit('Fight!', array('class'=>'large-3 medium-3 columns medium-offset-5 large-offset-5')) }}
                         {{ Form::close() }}
                         

@@ -120,7 +120,7 @@ footer > p {
 .ranGen label {
     font-weight: bold;
 }
-#newChar.ranChar select {
+#newChar select {
     padding: .7em;
 }
 /*   Dice Roller  */
@@ -143,9 +143,10 @@ a.toggleForm.up {
 .diceResults {
     background: url('../_images/dice.png') no-repeat;
     background-size: 100% 100%;
-    margin-top: 2em;
+    margin-top: 3em;
     height: 5em;
     width: 5em;
+    margin-bottom: 2em;
 }
 .diceResults h1 {
     color: #000;
@@ -390,7 +391,7 @@ nav .top-bar-section > ul > li.openPanel {
 	display: inline-block;
 	height: 450px;
 	margin: 0px;
-	min-width: 23em;
+	min-width: 30em;
 	overflow-y: scroll;
 	padding: 1% 2%;
 	position: absolute;
@@ -458,9 +459,6 @@ nav .top-bar-section > ul > li.openPanel {
 #newChar h2 {
     background: #8DD1FE;
     padding: 0.2em 0px;
-}
-#newChar select {
-    padding: .7em 0;
 }
 .vert label {
     vertical-align: middle;
